@@ -6,8 +6,8 @@
 //  Copyright (c) 2019 lyj. All rights reserved.
 //
 
-@import UIKit;
+#import <YJBaseModule/YJBaseModule.h>
 
-@interface YJViewController : UIViewController
+@interface YJViewController : YJBaseViewController
 
 @end

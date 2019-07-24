@@ -7,23 +7,23 @@
 //
 
 #import "YJViewController.h"
-
+#import "PtestViewController.h"
 @interface YJViewController ()
 
 @end
 
 @implementation YJViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)push:(id)sender {
+    PtestViewController *vc = [[PtestViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
+
+
 
 @end

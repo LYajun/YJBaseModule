@@ -1,0 +1,20 @@
+PODS:
+  - YJBaseModule (1.0.0):
+    - YJBaseModule/Manager (= 1.0.0)
+    - YJBaseModule/UIKit (= 1.0.0)
+  - YJBaseModule/Manager (1.0.0)
+  - YJBaseModule/UIKit (1.0.0)
+
+DEPENDENCIES:
+  - YJBaseModule (from `../`)
+
+EXTERNAL SOURCES:
+  YJBaseModule:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  YJBaseModule: 235a536c28d0e3347e83a248264ceb8575007601
+
+PODFILE CHECKSUM: fbd86e2512a077e688239ad177feaef9d7bdc57f
+
+COCOAPODS: 1.7.0.beta.3
