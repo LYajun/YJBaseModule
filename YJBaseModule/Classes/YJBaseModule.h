@@ -14,7 +14,6 @@
 /** UIKit */
 #import "YJBaseViewController.h"
 #import "YJBaseNavigationController.h"
-#import "YJBaseTableView.h"
 #import "YJBaseCollectionView.h"
 #import "YJBaseView.h"
 

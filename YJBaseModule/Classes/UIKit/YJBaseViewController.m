@@ -16,7 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.closeFullScreenSideslip = YES;
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -66,7 +65,9 @@
 
 #pragma mark - Dealloc
 - (void)dealloc {
-    NSLog(@"%@ dealloc", NSStringFromClass([self class]));
+    self.navigationController.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"****** %@--dealloc *******", NSStringFromClass([self class]));
 }
 
 - (void)didReceiveMemoryWarning {

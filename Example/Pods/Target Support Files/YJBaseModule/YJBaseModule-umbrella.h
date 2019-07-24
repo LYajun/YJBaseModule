@@ -14,7 +14,6 @@
 #import "YJBaseManager.h"
 #import "YJBaseCollectionView.h"
 #import "YJBaseNavigationController.h"
-#import "YJBaseTableView.h"
 #import "YJBaseView.h"
 #import "YJBaseViewController.h"
 

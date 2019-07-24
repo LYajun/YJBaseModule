@@ -29,6 +29,9 @@
     self.backGesture.delegate = self;
     // 给导航控制器的view添加全屏滑动手势
     [self.view addGestureRecognizer:self.backGesture];
+    
+    
+
 }
 
 

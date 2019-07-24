@@ -17,8 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-    
+    self.closeSideslip = YES;
 }
 - (void)yj_interactivePopGestureAction{
     NSLog(@"%@ pop 了啊",NSStringFromClass(self.class));
