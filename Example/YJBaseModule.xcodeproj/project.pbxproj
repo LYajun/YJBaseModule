@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		122C73AF3AF56826CD954A63 /* YJBaseModule.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YJBaseModule.podspec; path = ../YJBaseModule.podspec; sourceTree = "<group>"; };
+		122C73AF3AF56826CD954A63 /* YJBaseModule.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YJBaseModule.podspec; path = ../YJBaseModule.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		1DA7E0D7FCC8BB63678E7BAB /* Pods-YJBaseModule_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YJBaseModule_Example.release.xcconfig"; path = "Target Support Files/Pods-YJBaseModule_Example/Pods-YJBaseModule_Example.release.xcconfig"; sourceTree = "<group>"; };
 		2C3D554FFB2DE66D5D805603 /* Pods-YJBaseModule_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YJBaseModule_Tests.release.xcconfig"; path = "Target Support Files/Pods-YJBaseModule_Tests/Pods-YJBaseModule_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5CE672614CC697D527B3117A /* Pods_YJBaseModule_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YJBaseModule_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,11 +334,25 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-YJBaseModule_Example/Pods-YJBaseModule_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LGAlertHUD/LGAlertHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
+				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
+				"${BUILT_PRODUCTS_DIR}/TFHpple/TFHpple.framework",
+				"${BUILT_PRODUCTS_DIR}/YJActivityIndicatorView/YJActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/YJBaseModule/YJBaseModule.framework",
+				"${BUILT_PRODUCTS_DIR}/YJExtensions/YJExtensions.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LGAlertHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TFHpple.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YJActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YJBaseModule.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YJExtensions.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

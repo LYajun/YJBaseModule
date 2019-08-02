@@ -11,11 +11,16 @@
 #endif
 
 #import "YJBaseModule.h"
-#import "YJBaseManager.h"
-#import "YJBaseCollectionView.h"
-#import "YJBaseNavigationController.h"
-#import "YJBaseView.h"
-#import "YJBaseViewController.h"
+#import "YJBCollectionView.h"
+#import "YJBDataModel.h"
+#import "YJBModel.h"
+#import "YJBNavigationController.h"
+#import "YJBTableView.h"
+#import "YJBTableViewCell.h"
+#import "YJBView.h"
+#import "YJBViewController.h"
+#import "YJBManager.h"
+#import "YJBMarqueeLabel.h"
 
 FOUNDATION_EXPORT double YJBaseModuleVersionNumber;
 FOUNDATION_EXPORT const unsigned char YJBaseModuleVersionString[];

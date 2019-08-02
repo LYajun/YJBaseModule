@@ -7,6 +7,7 @@
 //
 
 #import "YJAppDelegate.h"
+#import <YJBaseModule/YJBaseModule.h>
 
 @implementation YJAppDelegate
 

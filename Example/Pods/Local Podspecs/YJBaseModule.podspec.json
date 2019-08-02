@@ -1,6 +1,6 @@
 {
   "name": "YJBaseModule",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "summary": "基类",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/LYajun/YJBaseModule",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/LYajun/YJBaseModule.git",
-    "tag": "1.0.1"
+    "tag": "1.0.3"
   },
   "platforms": {
     "ios": "8.0"
@@ -23,11 +23,43 @@
   "subspecs": [
     {
       "name": "Manager",
-      "source_files": "YJBaseModule/Classes/Manager/**/*"
+      "source_files": "YJBaseModule/Classes/Manager/**/*",
+      "dependencies": {
+        "YJExtensions": [
+
+        ]
+      }
     },
     {
-      "name": "UIKit",
-      "source_files": "YJBaseModule/Classes/UIKit/**/*"
+      "name": "MarqueeLabel",
+      "source_files": "YJBaseModule/Classes/MarqueeLabel/**/*"
+    },
+    {
+      "name": "Base",
+      "source_files": "YJBaseModule/Classes/Base/**/*",
+      "dependencies": {
+        "YJBaseModule/Manager": [
+
+        ],
+        "MJRefresh": [
+
+        ],
+        "Masonry": [
+
+        ],
+        "MJExtension": [
+
+        ],
+        "YJExtensions": [
+
+        ],
+        "LGAlertHUD": [
+
+        ],
+        "YJActivityIndicatorView": [
+
+        ]
+      }
     }
   ]
 }

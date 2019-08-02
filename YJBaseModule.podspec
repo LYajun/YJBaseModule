@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YJBaseModule'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = '基类'
 
   s.description      = <<-DESC
@@ -27,11 +27,24 @@ TODO: Add long description of the pod here.
 
 s.subspec 'Manager' do |manager|
     manager.source_files = 'YJBaseModule/Classes/Manager/**/*'
+    manager.dependency 'YJExtensions'
 end
 
-s.subspec 'UIKit' do |uikit|
-    uikit.source_files = 'YJBaseModule/Classes/UIKit/**/*'
+s.subspec 'MarqueeLabel' do |marqueeLabel|
+    marqueeLabel.source_files = 'YJBaseModule/Classes/MarqueeLabel/**/*'
 end
+
+s.subspec 'Base' do |base|
+    base.source_files = 'YJBaseModule/Classes/Base/**/*'
+    base.dependency 'YJBaseModule/Manager'
+    base.dependency 'MJRefresh'
+    base.dependency 'Masonry'
+    base.dependency 'MJExtension'
+    base.dependency 'YJExtensions'
+    base.dependency 'LGAlertHUD'
+    base.dependency 'YJActivityIndicatorView'
+end
+
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

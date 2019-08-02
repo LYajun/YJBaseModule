@@ -1,19 +1,65 @@
 PODS:
-  - YJBaseModule (1.0.1):
-    - YJBaseModule/Manager (= 1.0.1)
-    - YJBaseModule/UIKit (= 1.0.1)
-  - YJBaseModule/Manager (1.0.1)
-  - YJBaseModule/UIKit (1.0.1)
+  - LGAlertHUD (1.0.6):
+    - LGAlertHUD/AlertView (= 1.0.6)
+    - Masonry
+    - YJExtensions
+  - LGAlertHUD/AlertView (1.0.6):
+    - Masonry
+    - YJExtensions
+  - Masonry (1.1.0)
+  - MJExtension (3.1.0)
+  - MJRefresh (3.2.0)
+  - TFHpple (2.0.0)
+  - YJActivityIndicatorView (1.0.0)
+  - YJBaseModule (1.0.3):
+    - YJBaseModule/Base (= 1.0.3)
+    - YJBaseModule/Manager (= 1.0.3)
+    - YJBaseModule/MarqueeLabel (= 1.0.3)
+  - YJBaseModule/Base (1.0.3):
+    - LGAlertHUD
+    - Masonry
+    - MJExtension
+    - MJRefresh
+    - YJActivityIndicatorView
+    - YJBaseModule/Manager
+    - YJExtensions
+  - YJBaseModule/Manager (1.0.3):
+    - YJExtensions
+  - YJBaseModule/MarqueeLabel (1.0.3)
+  - YJExtensions (1.1.5):
+    - YJExtensions/Foundation (= 1.1.5)
+    - YJExtensions/UIKit (= 1.1.5)
+  - YJExtensions/Foundation (1.1.5):
+    - TFHpple
+  - YJExtensions/UIKit (1.1.5):
+    - YJExtensions/Foundation
 
 DEPENDENCIES:
   - YJBaseModule (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - LGAlertHUD
+    - Masonry
+    - MJExtension
+    - MJRefresh
+    - TFHpple
+    - YJActivityIndicatorView
+    - YJExtensions
 
 EXTERNAL SOURCES:
   YJBaseModule:
     :path: "../"
 
 SPEC CHECKSUMS:
-  YJBaseModule: 43ae2e0d1cda501f4c10371b67d0e1bd2f0412c3
+  LGAlertHUD: 140dbfe623d32139a0d3ffcd3c128cbc8f595fff
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MJExtension: 6b69b3bef2864fd550ce1a184eda219e321209d2
+  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
+  TFHpple: a916fe0799eb30aa29b2670d14d5868cdd3a5b81
+  YJActivityIndicatorView: f51112fa59d69762bd6147cf0da573ff2a9a0215
+  YJBaseModule: 42927c705818c5fb2f8216981b57b1f170838f1e
+  YJExtensions: e1f7e35f8e851ed41598d8449fc3735ef4b6bddc
 
 PODFILE CHECKSUM: fbd86e2512a077e688239ad177feaef9d7bdc57f
 

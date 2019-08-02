@@ -8,6 +8,6 @@
 
 #import <YJBaseModule/YJBaseModule.h>
 
-@interface ViewController1 : YJBaseViewController
+@interface ViewController1 : YJBViewController
 
 @end

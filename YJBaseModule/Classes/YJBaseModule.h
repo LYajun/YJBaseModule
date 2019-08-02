@@ -9,13 +9,14 @@
 #define YJBaseModule_h
 
 
-#import "YJBaseManager.h"
+#import "YJBManager.h"
 
 /** UIKit */
-#import "YJBaseViewController.h"
-#import "YJBaseNavigationController.h"
-#import "YJBaseCollectionView.h"
-#import "YJBaseView.h"
+#import "YJBViewController.h"
+#import "YJBNavigationController.h"
+#import "YJBCollectionView.h"
+#import "YJBTableView.h"
+#import "YJBView.h"
 
 
 
