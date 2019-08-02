@@ -43,7 +43,7 @@
     [self yj_setLoadingGifViewShow:YES];
 }
 - (IBAction)empty:(id)sender {
-    [self yj_setNoDataViewShow:YES];
+    [self yj_setNoDataViewShow:YES isSearch:YES];
 }
 
 - (IBAction)loadError:(id)sender {

@@ -274,7 +274,7 @@
         [gifImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.loadingGifView);
             make.centerY.equalTo(self.loadingGifView).offset(-10);
-            make.width.equalTo(self.loadingGifView).multipliedBy(0.4);
+            make.width.mas_equalTo(140);
             make.height.equalTo(gifImageView.mas_width).multipliedBy(1.01);
         }];
         

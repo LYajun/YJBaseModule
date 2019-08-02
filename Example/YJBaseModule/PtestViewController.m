@@ -27,8 +27,9 @@
      NSLog(@"%@ pop 了啊",NSStringFromClass(self.class));
 }
 - (IBAction)push:(id)sender {
-    ViewController1 *vc = [[ViewController1 alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self yj_setLoadingGifViewShow:YES];
+//    ViewController1 *vc = [[ViewController1 alloc] init];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
