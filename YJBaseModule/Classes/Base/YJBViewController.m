@@ -34,6 +34,15 @@
 @end
 
 @implementation YJBViewController
+- (instancetype)initWithDataModelName:(NSString *)dataModelName{
+    if (self = [super init]) {
+        if (dataModelName && dataModelName.length > 0) {
+            Class ServiceClass = NSClassFromString(dataModelName);
+            self.dataModel = [[ServiceClass alloc] initWithOwnController:self];
+        }
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -119,7 +128,11 @@
     __weak typeof(self) weakSelf = self;
     [self.dataModel yj_loadDataWithSuccess:^(BOOL noData) {
         if (noData) {
-            [weakSelf yj_setNoDataViewShow:YES];
+            if (weakSelf.yj_searchNodata) {
+                [weakSelf yj_setNoDataViewShow:YES isSearch:YES];
+            }else{
+                [weakSelf yj_setNoDataViewShow:YES];
+            }
         }else{
             if (weakSelf.isLoadingGif) {
                 [weakSelf yj_setLoadingGifViewShow:NO];
@@ -132,8 +145,8 @@
             [weakSelf yj_updateData];
         }
     } failed:^(NSError *error) {
-        weakSelf.yj_loadErrorTitle = error.localizedDescription;
         [weakSelf yj_setLoadErrorViewShow:YES];
+        weakSelf.yj_loadErrorTitle = error.localizedDescription;
         if (completion) {
             completion(NO);
         }
@@ -143,7 +156,11 @@
     
 }
 - (void)yj_loadErrorUpdate{
-    [self yj_loadData];
+    if (self.isLoadingGif) {
+        [self yj_loadGifData];
+    }else{
+        [self yj_loadData];
+    }
 }
 #pragma mark - Setter
 - (void)setYj_loadingGifTitle:(NSString *)yj_loadingGifTitle{
@@ -164,6 +181,11 @@
 }
 - (void)setSearchEmpty:(BOOL)isSearchEmpty{
     self.noDataImgView.highlighted = isSearchEmpty;
+    if (isSearchEmpty) {
+        self.noDataLab.text = [YJBManager defaultManager].searchEmptyTitle;
+    }else{
+        self.noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
+    }
     if (isSearchEmpty) {
         CGAffineTransform transform = CGAffineTransformIdentity;
         transform = CGAffineTransformScale(transform,self.yj_searchScale, self.yj_searchScale);

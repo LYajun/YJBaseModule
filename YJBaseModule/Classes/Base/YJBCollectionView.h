@@ -9,9 +9,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol YJBCollectionViewRefreshDelegate <NSObject>
+@optional
 - (void)collectionViewHeaderDidRefresh;
 - (void)collectionViewFooterDidRefresh;
-- (void)collectionViewAgainLoadData;
 @end
 @interface YJBCollectionView : UICollectionView
 @property (nonatomic,assign) id<YJBCollectionViewRefreshDelegate> refreshDelegate;
@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)endFooterRefreshing;
 - (void)endFooterRefreshingWithNoMoreData;
 - (void)resetFooterNoMoreData;
-
+- (void)startHeaderRefreshing;
 - (void)yj_reloadData;
 @end
 

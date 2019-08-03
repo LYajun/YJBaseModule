@@ -22,6 +22,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *resType;
 /** 资料来源 */
 @property (nonatomic,copy) NSString *source;
+
+/** 教案ID */
+@property (nonatomic,copy) NSString *lessonPlanID;
+/** 教师ID */
+@property (nonatomic,copy) NSString *teacherID;
+
+/** 课件ID */
+@property (nonatomic,copy) NSString *coursewareID;
+/** 子课件ID */
+@property (nonatomic,copy) NSString *subCoursewareID;
+
 /** 任务ID */
 @property (nonatomic,copy) NSString *assignmentID;
 /** 任务ID */
@@ -42,6 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL isStandard;
 /** 资料类型 */
 @property (nonatomic,assign) NSInteger resOriginTypeID;
+/** 课件类型ID */
+@property (nonatomic,copy) NSString *resOriTypeID;
 /** 其他参数 */
 @property (nonatomic,strong) NSDictionary *otherParameters;
 
@@ -52,8 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) NSInteger startPage;
 /** 表格 每页数据量 */
 @property (nonatomic,assign) NSInteger pageSize;
-/** 表格 索引 */
-@property (nonatomic,assign) NSInteger pageIndex;
 /** 表格 总数 */
 @property (nonatomic,assign) NSInteger totalCount;
 /** 刷新数据索引 */

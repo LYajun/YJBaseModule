@@ -41,7 +41,7 @@
     _loadingFlowerColor = [UIColor yj_colorWithHex:0x45bcfa];
     
     
-    _loadEmptyTitle = @"暂无相关内容~";
+    _loadEmptyTitle = @"暂无内容";
     _loadEmptyImgName = @"empty_1";
     _loadEmptyTitleColor = [UIColor yj_colorWithHex:0x989898];
     _loadEmptyTitleSize = 14;

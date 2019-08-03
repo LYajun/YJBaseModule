@@ -9,9 +9,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol YJBTableViewRefreshDelegate <NSObject>
+@optional
 - (void)tableViewHeaderDidRefresh;
 - (void)tableViewFooterDidRefresh;
-- (void)tableViewAgainLoadData;
 @end
 @interface YJBTableView : UITableView
 @property (nonatomic,assign) id<YJBTableViewRefreshDelegate> refreshDelegate;
@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)endFooterRefreshing;
 - (void)endFooterRefreshingWithNoMoreData;
 - (void)resetFooterNoMoreData;
+
+- (void)startHeaderRefreshing;
 
 @end
 

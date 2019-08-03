@@ -73,7 +73,16 @@
         [self.mj_footer resetNoMoreData];
     }
 }
-
+- (void)startHeaderRefreshing{
+    __weak typeof(self) weakSelf = self;
+    if (self.mj_header) {
+        [self.mj_header beginRefreshingWithCompletionBlock:^{
+            if (weakSelf.refreshDelegate && [weakSelf.refreshDelegate respondsToSelector:@selector(collectionViewHeaderDidRefresh)]) {
+                [weakSelf.refreshDelegate collectionViewHeaderDidRefresh];
+            }
+        }];
+    }
+}
 - (void)yj_reloadData{
     [CATransaction setDisableActions:YES];
     [self reloadData];

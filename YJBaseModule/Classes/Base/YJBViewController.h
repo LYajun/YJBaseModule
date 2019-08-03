@@ -15,7 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 数据处理对象 */
 @property (nonatomic,strong) YJBDataModel *dataModel;
-
+/** 初始化 */
+- (instancetype)initWithDataModelName:(NSString *)dataModelName;
 
 /** 是否关闭侧滑iOS默认手势，默认不关闭 */
 @property (nonatomic, assign) BOOL closeSideslip;
@@ -54,6 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) CGFloat yj_noDataImgOffsetY;
 
 
+/** 是否搜索 */
+@property (nonatomic,assign) BOOL yj_searchNodata;
 - (void)yj_setNoDataViewShow:(BOOL)show;
 - (void)yj_setNoDataViewShow:(BOOL)show isSearch:(BOOL)isSearch;
 - (void)yj_setNoDataViewShow:(BOOL)show belowView:(UIView *)belowView;

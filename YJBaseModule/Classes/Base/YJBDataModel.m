@@ -23,7 +23,6 @@
 - (void)yj_configure{
     _models = [NSMutableArray array];
     _startPage = 1;
-    _pageIndex = 1;
     _pageSize = 10;
     _totalCount = 0;
     _updateIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -60,6 +59,7 @@
 #pragma mark - Table
 
 - (void)yj_loadTableFirstPage{
+    [self.ownTableView resetFooterNoMoreData];
     self.currentPage = self.startPage;
     [self yj_loadTableDataWithPage:self.currentPage];
 }
@@ -96,13 +96,14 @@
     [self yj_loadTableDataAtIndexPath:self.updateIndexPath success:^(BOOL noData) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
         if (noData) {
+            [LGAlert showStatus:@"更新失败"];
         }else{
             [weakSelf.ownTableView reloadData];
             [weakSelf.ownTableView scrollToRowAtIndexPath:weakSelf.updateIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
         }
     } failed:^(NSError * _Nonnull error) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
-        [LGAlert showStatus:@"加载失败"];
+        [LGAlert showStatus:@"更新失败"];
     }];
 }
 - (void)yj_loadTableDataAtIndexPath:(NSIndexPath *)indexPath success:(void (^)(BOOL))success failed:(void (^)(NSError * _Nonnull))failed{
@@ -111,6 +112,7 @@
 
 #pragma mark - CollectionView
 - (void)yj_loadCollectionFirstPage{
+    [self.ownCollectionView resetFooterNoMoreData];
     self.currentPage = self.startPage;
     [self yj_loadCollectioneDataWithPage:self.currentPage];
 }
@@ -148,13 +150,14 @@
     [self yj_loadCollectionDataAtIndexPath:self.updateIndexPath success:^(BOOL noData) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
         if (noData) {
+            [LGAlert showStatus:@"更新失败"];
         }else{
             [weakSelf.ownCollectionView yj_reloadData];
             [weakSelf.ownCollectionView scrollToItemAtIndexPath:weakSelf.updateIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
         }
     } failed:^(NSError * _Nonnull error) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
-        [LGAlert showStatus:@"加载失败"];
+        [LGAlert showStatus:@"更新失败"];
     }];
 }
 
@@ -165,7 +168,7 @@
 
 #pragma mark - 数据处理
 - (void)yj_handleResponseDataList:(NSArray *)dataList modelClass:(Class)modelClass totalCount:(NSInteger)totalCount success:(void (^)(BOOL))success{
-    BOOL noMore = YES;
+    BOOL noMore = NO;
     if (dataList && dataList.count > 0) {
         if (self.currentPage != self.startPage) {
             if (totalCount > 0) {
