@@ -51,7 +51,7 @@
     _yj_searchTranslateY = -10;
     _yj_noDataImgOffsetY = -40;
     _yj_loadErrorImgOffsetY = -15;
-    [self addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
+ 
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -77,14 +77,7 @@
         ((YJBNavigationController *)self.navigationController).backGesture.enabled = YES;
     }
 }
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
-    if ([keyPath isEqualToString:@"title"]) {
-        [self updateMarqueeTitleWithTitle:[change valueForKey:@"new"]];
-    }
-}
-- (void)updateMarqueeTitleWithTitle:(NSString *)title{
-    NSLog(@"self.title = %@",title);
-}
+
 #pragma mark - UINavigationControllerDelegate
 - (void)willMoveToParentViewController:(UIViewController *)parent{
     [super willMoveToParentViewController:parent];
@@ -111,7 +104,6 @@
 
 #pragma mark - Dealloc
 - (void)dealloc {
-    [self removeObserver:self forKeyPath:@"title"];
     self.navigationController.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"****** %@--dealloc *******", NSStringFromClass([self class]));

@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 是否关闭全屏滑动，当侧滑关闭的时候，全屏滑动失效 */
 @property (nonatomic, assign) BOOL closeFullScreenSideslip;
 
-- (void)updateMarqueeTitleWithTitle:(NSString *)title;
 
 - (void)yj_interactivePopGestureAction;
 - (void)yj_setNavigationDelegate;
