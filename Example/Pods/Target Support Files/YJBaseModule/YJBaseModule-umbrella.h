@@ -20,6 +20,7 @@
 #import "YJBView.h"
 #import "YJBViewController.h"
 #import "YJBManager.h"
+#import "YJBAlertMarqueeLabel.h"
 #import "YJBMarqueeLabel.h"
 
 FOUNDATION_EXPORT double YJBaseModuleVersionNumber;

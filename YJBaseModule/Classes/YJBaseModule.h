@@ -17,7 +17,7 @@
 #import "YJBCollectionView.h"
 #import "YJBTableView.h"
 #import "YJBView.h"
-
+#import "YJBTableViewCell.h"
 
 
 #endif /* YJBaseModule_h */

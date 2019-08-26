@@ -51,10 +51,14 @@
     _yj_searchTranslateY = -10;
     _yj_noDataImgOffsetY = -40;
     _yj_loadErrorImgOffsetY = -15;
+    [self addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:nil];
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    if (![self.navigationController.view.gestureRecognizers containsObject:((YJBNavigationController *)self.navigationController).backGesture]) {
+        [self.navigationController.view addGestureRecognizer:((YJBNavigationController *)self.navigationController).backGesture];
+    }
+
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)] && self.closeSideslip) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
         ((YJBNavigationController *)self.navigationController).backGesture.enabled = NO;
@@ -73,7 +77,14 @@
         ((YJBNavigationController *)self.navigationController).backGesture.enabled = YES;
     }
 }
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"title"]) {
+        [self updateMarqueeTitleWithTitle:[change valueForKey:@"new"]];
+    }
+}
+- (void)updateMarqueeTitleWithTitle:(NSString *)title{
+    NSLog(@"self.title = %@",title);
+}
 #pragma mark - UINavigationControllerDelegate
 - (void)willMoveToParentViewController:(UIViewController *)parent{
     [super willMoveToParentViewController:parent];
@@ -100,6 +111,7 @@
 
 #pragma mark - Dealloc
 - (void)dealloc {
+    [self removeObserver:self forKeyPath:@"title"];
     self.navigationController.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"****** %@--dealloc *******", NSStringFromClass([self class]));

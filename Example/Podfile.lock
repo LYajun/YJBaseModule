@@ -11,11 +11,11 @@ PODS:
   - MJRefresh (3.2.0)
   - TFHpple (2.0.0)
   - YJActivityIndicatorView (1.0.0)
-  - YJBaseModule (1.0.3):
-    - YJBaseModule/Base (= 1.0.3)
-    - YJBaseModule/Manager (= 1.0.3)
-    - YJBaseModule/MarqueeLabel (= 1.0.3)
-  - YJBaseModule/Base (1.0.3):
+  - YJBaseModule (1.0.5):
+    - YJBaseModule/Base (= 1.0.5)
+    - YJBaseModule/Manager (= 1.0.5)
+    - YJBaseModule/MarqueeLabel (= 1.0.5)
+  - YJBaseModule/Base (1.0.5):
     - LGAlertHUD
     - Masonry
     - MJExtension
@@ -23,9 +23,9 @@ PODS:
     - YJActivityIndicatorView
     - YJBaseModule/Manager
     - YJExtensions
-  - YJBaseModule/Manager (1.0.3):
+  - YJBaseModule/Manager (1.0.5):
     - YJExtensions
-  - YJBaseModule/MarqueeLabel (1.0.3)
+  - YJBaseModule/MarqueeLabel (1.0.5)
   - YJExtensions (1.1.5):
     - YJExtensions/Foundation (= 1.1.5)
     - YJExtensions/UIKit (= 1.1.5)
@@ -58,7 +58,7 @@ SPEC CHECKSUMS:
   MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
   TFHpple: a916fe0799eb30aa29b2670d14d5868cdd3a5b81
   YJActivityIndicatorView: f51112fa59d69762bd6147cf0da573ff2a9a0215
-  YJBaseModule: 42927c705818c5fb2f8216981b57b1f170838f1e
+  YJBaseModule: 18429b1c2747fe8c341bc022e44b9913faf1ba81
   YJExtensions: e1f7e35f8e851ed41598d8449fc3735ef4b6bddc
 
 PODFILE CHECKSUM: fbd86e2512a077e688239ad177feaef9d7bdc57f

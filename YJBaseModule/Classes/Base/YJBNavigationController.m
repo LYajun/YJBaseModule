@@ -59,6 +59,12 @@
     if (self.viewControllers.count == 1) {
         viewController.hidesBottomBarWhenPushed = YES;
     }
+    if ([viewController isKindOfClass:NSClassFromString(@"YJBViewController")]) {
+        [self.view addGestureRecognizer:self.backGesture];
+    }else{
+        [self.view removeGestureRecognizer:self.backGesture];
+    }
+
     [super pushViewController:viewController animated:animated];
 }
 

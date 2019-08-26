@@ -19,6 +19,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 	
+    self.title = @"hao de ";
 }
 
 - (IBAction)push:(id)sender {
