@@ -7,7 +7,7 @@
 
 #import "YJBWebView.h"
 #import <YJExtensions/YJExtensions.h>
-#import <TFHpple/TFHpple.h>
+#import "YJBHpple.h"
 
 @implementation YJBWeakWebViewScriptMessageDelegate
 
@@ -73,12 +73,12 @@
     __block NSString *html = htmlStr.copy;
     NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
     // 解析html数据
-    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+    YJBHpple *xpathParser = [[YJBHpple alloc] initWithHTMLData:htmlData];
     // 根据标签来进行过滤
     NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];
     if (imgArray && imgArray.count > 0) {
         
-        [imgArray enumerateObjectsUsingBlock:^(TFHppleElement *hppleElement, NSUInteger idx, BOOL * _Nonnull stop) {
+        [imgArray enumerateObjectsUsingBlock:^(YJBHppleElement *hppleElement, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *attributes = hppleElement.attributes;
             NSString *imgSrc = [attributes objectForKey:@"src"];
             if ([attributes.allKeys containsObject:@"onclick"]) {

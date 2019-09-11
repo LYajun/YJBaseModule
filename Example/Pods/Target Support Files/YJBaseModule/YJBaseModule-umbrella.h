@@ -23,6 +23,9 @@
 #import "YJBManager.h"
 #import "YJBAlertMarqueeLabel.h"
 #import "YJBMarqueeLabel.h"
+#import "XPathQuery.h"
+#import "YJBHpple.h"
+#import "YJBHppleElement.h"
 
 FOUNDATION_EXPORT double YJBaseModuleVersionNumber;
 FOUNDATION_EXPORT const unsigned char YJBaseModuleVersionString[];

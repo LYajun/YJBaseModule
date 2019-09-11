@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YJBaseModule'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = '基类'
 
   s.description      = <<-DESC
@@ -34,9 +34,16 @@ s.subspec 'MarqueeLabel' do |marqueeLabel|
     marqueeLabel.source_files = 'YJBaseModule/Classes/MarqueeLabel/**/*'
 end
 
+s.subspec 'YJBHpple' do |hpple|
+    hpple.source_files = 'YJBaseModule/Classes/YJBHpple/**/*'
+    hpple.libraries  = 'xml2'
+    hpple.xcconfig  =  {'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2'}
+end
+
 s.subspec 'Base' do |base|
     base.source_files = 'YJBaseModule/Classes/Base/**/*'
     base.dependency 'YJBaseModule/Manager'
+    base.dependency 'YJBaseModule/YJBHpple'
     base.dependency 'MJRefresh'
     base.dependency 'Masonry'
     base.dependency 'MJExtension'
@@ -44,6 +51,7 @@ s.subspec 'Base' do |base|
     base.dependency 'LGAlertHUD'
     base.dependency 'YJActivityIndicatorView'
 end
+
 
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
