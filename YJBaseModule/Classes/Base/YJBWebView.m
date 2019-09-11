@@ -55,7 +55,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (body) {
-                [weakSelf yj_loadHTMLUrlString:body baseURL:baseURL];
+                [weakSelf yj_loadHTMLString:body baseURL:baseURL];
             }else {
                 NSLog(@"没有合适的编码");
                 NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -139,6 +139,9 @@
 }
 - (NSString *)yj_imgClickJSSrcPrefix{
     return @"image-preview";
+}
+- (NSString *)yj_autoFitTextSizeJSString{
+    return @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
 }
 - (void)yj_injectImgClickJS{
     [self evaluateJavaScript:@"function yjClickAction(url){alert('yjClickAction:' + url)}" completionHandler:^(id _Nullable result, NSError * _Nullable error) {

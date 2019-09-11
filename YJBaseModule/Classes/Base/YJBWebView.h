@@ -35,7 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)yj_isVoiceFileWithExtName:(NSString *)extName;
 + (BOOL)yj_isImgFileWithExtName:(NSString *)extName;
 
+
 - (NSString *)yj_imgClickJSSrcPrefix;
+- (NSString *)yj_autoFitTextSizeJSString;
+
 - (void)yj_adjustTestSizeWithSizeRate:(nullable NSString *)rate;
 - (void)yj_injectImgClickJS;
 - (void)yj_addImgClickJS;
