@@ -143,6 +143,25 @@
 - (NSString *)yj_autoFitTextSizeJSString{
     return @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
 }
+
+- (void)yj_injectImgAutoFitJS{
+    NSString *jsString = @"javascript:(function(){"
+    " var maxwidth=document.body.clientWidth;\n" //屏幕宽度
+    " for(i=0;i <document.images.length;i++){\n"
+    "     var myimg = document.images[i];\n"
+    "     if(myimg.width > maxwidth){\n"
+    "         myimg.style.width = '90%';\n"
+    "          myimg.style.height = 'auto'\n;"
+    "      }\n"
+    "  }\n"
+    "}\n"
+    ")()";
+    [self evaluateJavaScript:jsString completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"yj_injectImgAutoFitJS 注入失败:%@",error.localizedDescription);
+        }
+    }];
+}
 - (void)yj_injectImgClickJS{
     [self evaluateJavaScript:@"function yjClickAction(url){alert('yjClickAction:' + url)}" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
         if (error) {

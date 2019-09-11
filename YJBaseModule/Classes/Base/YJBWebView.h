@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)yj_autoFitTextSizeJSString;
 
 - (void)yj_adjustTestSizeWithSizeRate:(nullable NSString *)rate;
+- (void)yj_injectImgAutoFitJS;
 - (void)yj_injectImgClickJS;
 - (void)yj_addImgClickJS;
 - (void)yj_getImagesWithCompletionHandler:(void (^) (NSArray *_Nullable imgArr))completionHandler;
