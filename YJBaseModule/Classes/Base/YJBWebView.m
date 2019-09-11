@@ -7,7 +7,7 @@
 
 #import "YJBWebView.h"
 #import <YJExtensions/YJExtensions.h>
-
+#import <TFHpple/TFHpple.h>
 
 @implementation YJBWeakWebViewScriptMessageDelegate
 
@@ -66,9 +66,38 @@
     });
 }
 - (void)yj_loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL{
-    [self loadHTMLString:[NSString yj_adaptWebViewForHtml:string] baseURL:baseURL];
+    [self loadHTMLString:[NSString yj_adaptWebViewForHtml:[self modifyImgSrc:string]] baseURL:baseURL];
 }
 
+- (NSString *)modifyImgSrc:(NSString *)htmlStr{
+    __block NSString *html = htmlStr.copy;
+    NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
+    // 解析html数据
+    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+    // 根据标签来进行过滤
+    NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];
+    if (imgArray && imgArray.count > 0) {
+        
+        [imgArray enumerateObjectsUsingBlock:^(TFHppleElement *hppleElement, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSDictionary *attributes = hppleElement.attributes;
+            NSString *imgSrc = [attributes objectForKey:@"src"];
+            if ([attributes.allKeys containsObject:@"onclick"]) {
+                NSString *onclick = [NSString stringWithFormat:@"onclick=\"%@\"",[attributes objectForKey:@"onclick"]];
+                NSString *audiourl = imgSrc;
+                if ([attributes.allKeys containsObject:@"audiourl"]) {
+                    audiourl = [attributes objectForKey:@"audiourl"];
+                }
+                NSString *onclickReplace = [NSString stringWithFormat:@"onclick=\"yjClickAction('%@')\"",audiourl];
+                html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
+            }else{
+                NSString *onclick = [NSString stringWithFormat:@"src=\"%@\"",imgSrc];
+                NSString *onclickReplace = [NSString stringWithFormat:@"%@ onclick=\"yjClickAction('%@')\"",onclick,imgSrc];
+                html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
+            }
+        }];
+    }
+    return html;
+}
 
 + (NSArray *)yj_voiceAllFileExtension{
     return @[@"wav",@"mp3",@"pcm",@"amr",@"aac",@"caf"];
@@ -111,24 +140,14 @@
 - (NSString *)yj_imgClickJSSrcPrefix{
     return @"image-preview";
 }
-- (void)yj_addImgClickJS{
-    //这里是JS，主要目的: - 获取H5图片的url
-    static  NSString * const jsGetImages =
-    @"function getImages(){\
-    var objs = document.getElementsByTagName(\"img\");\
-    var imgScr = '';\
-    for(var i=0;i<objs.length;i++){\
-    imgScr = imgScr + objs[i].src + '+';\
-    };\
-    return imgScr;\
-    };";
-    
-    [self evaluateJavaScript:jsGetImages completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+- (void)yj_injectImgClickJS{
+    [self evaluateJavaScript:@"function yjClickAction(url){alert('yjClickAction:' + url)}" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
         if (error) {
-            NSLog(@"jsGetImages 注入失败:%@",error.localizedDescription);
+            NSLog(@"yjClickAction 注入失败:%@",error.localizedDescription);
         }
-    }];//注入JS方法
-    
+    }];
+}
+- (void)yj_addImgClickJS{
     //添加图片可点击JS
     [self evaluateJavaScript:@"function registerImageClickAction(){\
      var imgs=document.getElementsByTagName('img');\
@@ -156,7 +175,7 @@
     var objs = document.getElementsByTagName(\"img\");\
     var imgScr = '';\
     for(var i=0;i<objs.length;i++){\
-    imgScr = imgScr + objs[i].src + '+';\
+    imgScr = imgScr + objs[i].src + '***';\
     };\
     return imgScr;\
     };";
