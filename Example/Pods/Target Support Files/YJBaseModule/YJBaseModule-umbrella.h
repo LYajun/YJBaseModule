@@ -19,6 +19,7 @@
 #import "YJBTableViewCell.h"
 #import "YJBView.h"
 #import "YJBViewController.h"
+#import "YJBWebView.h"
 #import "YJBManager.h"
 #import "YJBAlertMarqueeLabel.h"
 #import "YJBMarqueeLabel.h"
