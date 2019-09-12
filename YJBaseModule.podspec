@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YJBaseModule'
-  s.version          = '1.1.4'
+  s.version          = '1.1.5'
   s.summary          = '基类'
 
   s.description      = <<-DESC
@@ -40,10 +40,18 @@ s.subspec 'YJBHpple' do |hpple|
     hpple.xcconfig  =  {'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2'}
 end
 
+s.subspec 'YJBWebView' do |webView|
+    webView.source_files = 'YJBaseModule/Classes/YJBWebView/**/*'
+     webView.dependency 'YJBaseModule/MarqueeLabel'
+    webView.dependency 'YJBaseModule/YJBHpple'
+    webView.dependency 'YJBaseModule/Manager'
+    webView.dependency 'Masonry'
+    webView.dependency 'YJExtensions'
+end
+
 s.subspec 'Base' do |base|
     base.source_files = 'YJBaseModule/Classes/Base/**/*'
     base.dependency 'YJBaseModule/Manager'
-    base.dependency 'YJBaseModule/YJBHpple'
     base.dependency 'MJRefresh'
     base.dependency 'Masonry'
     base.dependency 'MJExtension'

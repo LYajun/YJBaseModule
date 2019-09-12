@@ -8,7 +8,8 @@
 #import "YJBWebView.h"
 #import <YJExtensions/YJExtensions.h>
 #import "YJBHpple.h"
-
+#import "YJBWebNavigationView.h"
+#import <Masonry/Masonry.h>
 @implementation YJBWeakWebViewScriptMessageDelegate
 
 - (instancetype)initWithDelegate:(id<WKScriptMessageHandler>)scriptDelegate {
@@ -31,10 +32,24 @@
 @end
 
 @interface YJBWebView ()
-
+@property (nonatomic,assign) BOOL isAddImgOnClick;
+@property (nonatomic,strong) YJBWebNavigationView *navigationView;
 @end
 @implementation YJBWebView
+- (instancetype)initWithFrame:(CGRect)frame configuration:(WKWebViewConfiguration *)configuration{
+    if (self = [super initWithFrame:frame configuration:configuration]) {
+        [self addSubview:self.navigationView];
+        [self.navigationView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.centerX.top.equalTo(self);
+            make.height.mas_equalTo(40);
+        }];
+        self.navigationView.hidden = YES;
+    }
+    return self;
+}
+
 - (void)yj_loadHTMLUrlString:(NSString *)urlString baseURL:(NSURL *)baseURL{
+    self.isAddImgOnClick = NO;
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
@@ -66,9 +81,16 @@
     });
 }
 - (void)yj_loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL{
+    self.isAddImgOnClick = YES;
     [self loadHTMLString:[NSString yj_adaptWebViewForHtml:[self modifyImgSrc:string]] baseURL:baseURL];
 }
-
+- (void)yj_loadRequestWithUrlString:(NSString *)string{
+    self.isAddImgOnClick = NO;
+    NSURL *url = [NSURL URLWithString:[string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.timeoutInterval = 15;
+    [self loadRequest:request];
+}
 - (NSString *)modifyImgSrc:(NSString *)htmlStr{
     __block NSString *html = htmlStr.copy;
     NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
@@ -87,11 +109,11 @@
                 if ([attributes.allKeys containsObject:@"audiourl"]) {
                     audiourl = [attributes objectForKey:@"audiourl"];
                 }
-                NSString *onclickReplace = [NSString stringWithFormat:@"onclick=\"yjClickAction('%@')\"",audiourl];
+                NSString *onclickReplace = [NSString stringWithFormat:@"onclick=\"yjClickAction('%@')\"",[audiourl stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
                 html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
             }else{
                 NSString *onclick = [NSString stringWithFormat:@"src=\"%@\"",imgSrc];
-                NSString *onclickReplace = [NSString stringWithFormat:@"%@ onclick=\"yjClickAction('%@')\"",onclick,imgSrc];
+                NSString *onclickReplace = [NSString stringWithFormat:@"%@ onclick=\"yjClickAction('%@')\"",onclick,[imgSrc stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
                 html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
             }
         }];
@@ -138,7 +160,7 @@
     }];
 }
 + (NSString *)yj_imgClickJSSrcPrefix{
-    return @"image-preview";
+    return @"yjclickaction";
 }
 + (NSString *)yj_autoFitTextSizeJSString{
     return @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
@@ -148,33 +170,38 @@
 }
 
 - (void)yj_injectImgClickJS{
-    [self evaluateJavaScript:@"function yjClickAction(url){alert('yjClickAction:' + url)}" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"yjClickAction 注入失败:%@",error.localizedDescription);
-        }
-    }];
+    // window.location.href='yjclickaction:'+this.src
+    // alert('yjClickAction:'+ this.src)
+    if (self.isAddImgOnClick) {
+        [self evaluateJavaScript:@"function yjClickAction(url){alert('yjclickaction:'+ url)}" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"yjClickAction 注入失败:%@",error.localizedDescription);
+            }
+        }];
+        
+    }else{
+        //添加图片可点击JS
+        [self evaluateJavaScript:@"function registerImageClickAction(){\
+         var imgs=document.getElementsByTagName('img');\
+         var length=imgs.length;\
+         for(var i=0;i<length;i++){\
+         img=imgs[i];\
+         img.onclick=function(){alert('yjclickaction:'+ this.src)}\
+         }\
+         }" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+             if (error) {
+                 NSLog(@"添加图片可点击JS 注入失败:%@",error.localizedDescription);
+             }
+         }];
+        
+        [self evaluateJavaScript:@"registerImageClickAction();"  completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"registerImageClickAction 注入失败:%@",error.localizedDescription);
+            }
+        }];
+    }
 }
-- (void)yj_addImgClickJS{
-    //添加图片可点击JS
-    [self evaluateJavaScript:@"function registerImageClickAction(){\
-     var imgs=document.getElementsByTagName('img');\
-     var length=imgs.length;\
-     for(var i=0;i<length;i++){\
-     img=imgs[i];\
-     img.onclick=function(){alert('yjClickAction:'+ this.src)}\
-     }\
-     }" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-         if (error) {
-             NSLog(@"添加图片可点击JS 注入失败:%@",error.localizedDescription);
-         }
-     }];
-    
-    [self evaluateJavaScript:@"registerImageClickAction();"  completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"registerImageClickAction 注入失败:%@",error.localizedDescription);
-        }
-    }];
-}
+
 - (void)yj_getImagesWithCompletionHandler:(void (^)(NSArray * _Nullable))completionHandler{
     static  NSString * const jsGetImages =
     @"function getImages(){\
@@ -202,5 +229,34 @@
             completionHandler(urlArray);
         }
     }];
+}
+
+static float yjbContentInsetTop = -1;
+- (void)showNavigationBarAtDidFinishNavigation{{
+    __weak typeof(self) weakSelf = self;
+    [self evaluateJavaScript:@"document.title" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+        if (!error) {
+            weakSelf.navigationView.titleStr = result;
+        }
+    }];
+    BOOL showNavigationBar = self.canGoBack;
+    self.navigationView.hidden = !showNavigationBar;
+    if (yjbContentInsetTop < 0) {
+        yjbContentInsetTop = self.scrollView.contentInset.top;
+    }
+    UIEdgeInsets currentInset = self.scrollView.contentInset;
+    self.scrollView.contentInset = UIEdgeInsetsMake(showNavigationBar ? (yjbContentInsetTop > 40 ? yjbContentInsetTop : 40) : yjbContentInsetTop, currentInset.left, currentInset.bottom, currentInset.right);
+}}
+
+
+- (YJBWebNavigationView *)navigationView{
+    if (!_navigationView) {
+        _navigationView = [[YJBWebNavigationView alloc] initWithFrame:CGRectZero];
+        __weak typeof(self) weakSelf = self;
+        _navigationView.backBlock = ^{
+            [weakSelf goBack];
+        };
+    }
+    return _navigationView;
 }
 @end

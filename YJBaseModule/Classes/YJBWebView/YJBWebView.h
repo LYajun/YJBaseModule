@@ -25,9 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YJBWebView : WKWebView
 
+- (void)showNavigationBarAtDidFinishNavigation;
+
 - (void)yj_loadHTMLUrlString:(NSString *)urlString baseURL:(nullable NSURL *)baseURL;
 - (void)yj_loadHTMLString:(NSString *)string baseURL:(nullable NSURL *)baseURL;
-
+- (void)yj_loadRequestWithUrlString:(NSString *)string;
 
 + (NSArray *)yj_voiceAllFileExtension;
 + (NSArray *)yj_imageAllFileExtension;
@@ -43,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)yj_adjustTestSizeWithSizeRate:(nullable NSString *)rate;
 
 - (void)yj_injectImgClickJS;
-- (void)yj_addImgClickJS;
+
 - (void)yj_getImagesWithCompletionHandler:(void (^) (NSArray *_Nullable imgArr))completionHandler;
 @end
 

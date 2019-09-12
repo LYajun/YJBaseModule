@@ -8,10 +8,12 @@
 
 #import "YJViewController.h"
 #import "PtestViewController.h"
+#import <YJBaseModule/YJBWebView.h>
+#import <Masonry/Masonry.h>
+#import <LGAlertHUD/LGAlertHUD.h>
 
-
-@interface YJViewController ()
-
+@interface YJViewController ()<WKNavigationDelegate>
+@property (strong, nonatomic) YJBWebView *webView;
 @end
 
 @implementation YJViewController
@@ -20,8 +22,26 @@
     [super viewDidLoad];
 	
     self.title = @"hao de ";
+    
+    [self.view addSubview:self.webView];
+    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    [LGAlert showIndeterminate];
+    [self.webView yj_loadRequestWithUrlString:@"http://www.chinalancoo.com"];
 }
 
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
+    [LGAlert showErrorWithStatus:@"加载失败"];
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    [LGAlert hide];
+    [self.webView showNavigationBarAtDidFinishNavigation];
+}
 - (IBAction)push:(id)sender {
     
     PtestViewController *vc = [[PtestViewController alloc] init];
@@ -51,4 +71,25 @@
     [self yj_setLoadErrorViewShow:YES];
 }
 
+
+
+- (YJBWebView *)webView{
+    if (!_webView) {
+        WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:[YJBWebView yj_autoFitTextSizeJSString] injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+        WKUserScript *wkImgScript = [[WKUserScript alloc] initWithSource:[YJBWebView yj_autoFitImgSizeJSString] injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+        WKUserContentController *wkUController = [[WKUserContentController alloc] init];
+        [wkUController addUserScript:wkUScript];
+        [wkUController addUserScript:wkImgScript];
+        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+        config.userContentController = wkUController;
+        WKPreferences *preference = [[WKPreferences alloc]init];
+        config.preferences = preference;
+        _webView = [[YJBWebView alloc] initWithFrame:CGRectZero configuration:config];
+        _webView.navigationDelegate = self;
+        _webView.scrollView.bounces = NO;
+        _webView.backgroundColor = [UIColor whiteColor];
+        _webView.scrollView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
+    }
+    return _webView;
+}
 @end

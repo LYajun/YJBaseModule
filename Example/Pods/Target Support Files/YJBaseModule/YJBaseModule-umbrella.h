@@ -19,13 +19,14 @@
 #import "YJBTableViewCell.h"
 #import "YJBView.h"
 #import "YJBViewController.h"
-#import "YJBWebView.h"
 #import "YJBManager.h"
 #import "YJBAlertMarqueeLabel.h"
 #import "YJBMarqueeLabel.h"
 #import "XPathQuery.h"
 #import "YJBHpple.h"
 #import "YJBHppleElement.h"
+#import "YJBWebNavigationView.h"
+#import "YJBWebView.h"
 
 FOUNDATION_EXPORT double YJBaseModuleVersionNumber;
 FOUNDATION_EXPORT const unsigned char YJBaseModuleVersionString[];
