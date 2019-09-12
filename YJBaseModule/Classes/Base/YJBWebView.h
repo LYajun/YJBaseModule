@@ -36,11 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)yj_isImgFileWithExtName:(NSString *)extName;
 
 
-- (NSString *)yj_imgClickJSSrcPrefix;
-- (NSString *)yj_autoFitTextSizeJSString;
++ (NSString *)yj_imgClickJSSrcPrefix;
++ (NSString *)yj_autoFitTextSizeJSString;
++ (NSString *)yj_autoFitImgSizeJSString;
 
 - (void)yj_adjustTestSizeWithSizeRate:(nullable NSString *)rate;
-- (void)yj_injectImgAutoFitJS;
+
 - (void)yj_injectImgClickJS;
 - (void)yj_addImgClickJS;
 - (void)yj_getImagesWithCompletionHandler:(void (^) (NSArray *_Nullable imgArr))completionHandler;

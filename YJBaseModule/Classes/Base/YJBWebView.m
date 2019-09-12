@@ -134,34 +134,19 @@
         if (error) {
             NSLog(@"字体设置失败:%@",error.localizedDescription);
         }
-       
+        
     }];
 }
-- (NSString *)yj_imgClickJSSrcPrefix{
++ (NSString *)yj_imgClickJSSrcPrefix{
     return @"image-preview";
 }
-- (NSString *)yj_autoFitTextSizeJSString{
++ (NSString *)yj_autoFitTextSizeJSString{
     return @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
 }
-
-- (void)yj_injectImgAutoFitJS{
-    NSString *jsString = @"javascript:(function(){"
-    " var maxwidth=document.body.clientWidth;\n" //屏幕宽度
-    " for(i=0;i <document.images.length;i++){\n"
-    "     var myimg = document.images[i];\n"
-    "     if(myimg.width > maxwidth){\n"
-    "         myimg.style.width = '90%';\n"
-    "          myimg.style.height = 'auto'\n;"
-    "      }\n"
-    "  }\n"
-    "}\n"
-    ")()";
-    [self evaluateJavaScript:jsString completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-        if (error) {
-            NSLog(@"yj_injectImgAutoFitJS 注入失败:%@",error.localizedDescription);
-        }
-    }];
++ (NSString *)yj_autoFitImgSizeJSString{
+    return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.width > maxwidth){img.style.width = '90%';img.style.height = 'auto';}}";
 }
+
 - (void)yj_injectImgClickJS{
     [self evaluateJavaScript:@"function yjClickAction(url){alert('yjClickAction:' + url)}" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
         if (error) {
@@ -176,8 +161,7 @@
      var length=imgs.length;\
      for(var i=0;i<length;i++){\
      img=imgs[i];\
-     img.onclick=function(){\
-     window.location.href='image-preview:'+this.src}\
+     img.onclick=function(){alert('yjClickAction:'+ this.src)}\
      }\
      }" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
          if (error) {
@@ -186,9 +170,9 @@
      }];
     
     [self evaluateJavaScript:@"registerImageClickAction();"  completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-          if (error) {
-              NSLog(@"registerImageClickAction 注入失败:%@",error.localizedDescription);
-          }
+        if (error) {
+            NSLog(@"registerImageClickAction 注入失败:%@",error.localizedDescription);
+        }
     }];
 }
 - (void)yj_getImagesWithCompletionHandler:(void (^)(NSArray * _Nullable))completionHandler{
