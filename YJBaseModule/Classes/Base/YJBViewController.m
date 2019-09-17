@@ -25,6 +25,7 @@
 @property (strong, nonatomic) UIView *noDataView;
 @property (strong, nonatomic) UILabel *noDataLab;
 @property (strong, nonatomic) UIImageView *noDataImgView;
+@property (strong, nonatomic) UIImageView *noDataSearchImgView;
 /** 加载失败 */
 @property (strong, nonatomic) UIView *loadErrorView;
 @property (strong, nonatomic) UILabel *loadErrorLab;
@@ -47,9 +48,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
-    _yj_searchScale = 2;
-    _yj_searchTranslateY = -10;
+
     _yj_noDataImgOffsetY = -40;
+    _yj_noDataSearchImgOffsetY = -70;
     _yj_loadErrorImgOffsetY = -15;
  
 }
@@ -184,19 +185,12 @@
     self.loadErrorLab.text = yj_loadErrorTitle;
 }
 - (void)setSearchEmpty:(BOOL)isSearchEmpty{
-    self.noDataImgView.highlighted = isSearchEmpty;
+    self.noDataImgView.hidden = isSearchEmpty;
+    self.noDataSearchImgView.hidden = !self.noDataImgView.hidden;
     if (isSearchEmpty) {
         self.noDataLab.text = [YJBManager defaultManager].searchEmptyTitle;
     }else{
         self.noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
-    }
-    if (isSearchEmpty) {
-        CGAffineTransform transform = CGAffineTransformIdentity;
-        transform = CGAffineTransformScale(transform,self.yj_searchScale, self.yj_searchScale);
-        transform = CGAffineTransformTranslate(transform, 0, self.yj_searchTranslateY);
-        self.noDataImgView.transform = transform;
-    }else{
-        self.noDataImgView.transform = CGAffineTransformIdentity;
     }
 }
 #pragma mark - Loading
@@ -345,6 +339,14 @@
             make.centerX.equalTo(self.noDataView);
             make.centerY.equalTo(self.noDataView).offset(self.yj_noDataImgOffsetY);
         }];
+        
+        [_noDataView addSubview:self.noDataSearchImgView];
+        
+        [self.noDataSearchImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.noDataView);
+            make.centerY.equalTo(self.noDataView).offset(self.yj_noDataSearchImgOffsetY);
+        }];
+        self.noDataSearchImgView.hidden = YES;
         [_noDataView addSubview:self.noDataLab];
         [self.noDataLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.noDataView);
@@ -415,10 +417,18 @@
 }
 - (UIImageView *)noDataImgView{
     if (!_noDataImgView) {
-        _noDataImgView = [[UIImageView alloc] initWithImage:[UIImage yj_imageNamed:[YJBManager defaultManager].loadEmptyImgName atDir:@"Empty" atBundle:[YJBManager defaultManager].currentBundle] highlightedImage:[UIImage yj_imageNamed:[YJBManager defaultManager].searchEmptyImgName atDir:@"SearchEmpty" atBundle:[YJBManager defaultManager].currentBundle]];
+        _noDataImgView = [[UIImageView alloc] initWithImage:[UIImage yj_imageNamed:[YJBManager defaultManager].loadEmptyImgName atDir:@"Empty" atBundle:[YJBManager defaultManager].currentBundle]];
     }
     return _noDataImgView;
 }
+
+- (UIImageView *)noDataSearchImgView{
+    if (!_noDataSearchImgView) {
+        _noDataSearchImgView = [[UIImageView alloc] initWithImage:[UIImage yj_imageNamed:[YJBManager defaultManager].searchEmptyImgName atDir:@"SearchEmpty" atBundle:[YJBManager defaultManager].currentBundle]];
+    }
+    return _noDataSearchImgView;
+}
+
 - (UILabel *)loadErrorLab{
     if (!_loadErrorLab) {
         _loadErrorLab = [[UILabel alloc]init];

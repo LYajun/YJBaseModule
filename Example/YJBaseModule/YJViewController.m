@@ -23,21 +23,25 @@
 	
     self.title = @"hao de ";
     
-    [self.view addSubview:self.webView];
-    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    [LGAlert showIndeterminate];
-    [self.webView yj_loadRequestWithUrlString:@"http://www.chinalancoo.com"];
+//    [self.view addSubview:self.webView];
+//    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view);
+//    }];
+//    [LGAlert showIndeterminate];
+//    [self.webView yj_loadRequestWithUrlString:@"http://www.chinalancoo.com"];
 }
-
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation{
+// 页面加载失败时调用
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(nonnull NSError *)error{
     [LGAlert showErrorWithStatus:@"加载失败"];
 }
-
+// 跳转失败时调用
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    [LGAlert showErrorWithStatus:@"加载失败"];
+}
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler{
     decisionHandler(WKNavigationActionPolicyAllow);
 }
+
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     [LGAlert hide];
     [self.webView showNavigationBarAtDidFinishNavigation];
@@ -64,7 +68,7 @@
     [self yj_setLoadingGifViewShow:YES];
 }
 - (IBAction)empty:(id)sender {
-    [self yj_setNoDataViewShow:YES isSearch:YES];
+    [self yj_setNoDataViewShow:YES isSearch:NO];
 }
 
 - (IBAction)loadError:(id)sender {
