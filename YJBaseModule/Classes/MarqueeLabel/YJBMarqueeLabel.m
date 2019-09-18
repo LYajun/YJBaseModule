@@ -10,10 +10,10 @@
 #import <QuartzCore/QuartzCore.h>
 
 // Notification strings
-NSString *const kMarqueeLabelControllerRestartNotification = @"YJBMarqueeLabelViewControllerRestart";
-NSString *const kMarqueeLabelShouldLabelizeNotification = @"YJBMarqueeLabelShouldLabelizeNotification";
-NSString *const kMarqueeLabelShouldAnimateNotification = @"YJBMarqueeLabelShouldAnimateNotification";
-NSString *const kMarqueeLabelAnimationCompletionBlock = @"YJBMarqueeLabelAnimationCompletionBlock";
+NSString *const kYJBMarqueeLabelControllerRestartNotification = @"YJBMarqueeLabelViewControllerRestart";
+NSString *const kYJBMarqueeLabelShouldLabelizeNotification = @"YJBMarqueeLabelShouldLabelizeNotification";
+NSString *const kYJBMarqueeLabelShouldAnimateNotification = @"YJBMarqueeLabelShouldAnimateNotification";
+NSString *const kYJBMarqueeLabelAnimationCompletionBlock = @"YJBMarqueeLabelAnimationCompletionBlock";
 
 // Animation completion block
 typedef void(^MLAnimationCompletionBlock)(BOOL finished);
@@ -63,7 +63,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
 
 + (void)restartLabelsOfController:(UIViewController *)controller {
     [YJBMarqueeLabel notifyController:controller
-                       withMessage:kMarqueeLabelControllerRestartNotification];
+                       withMessage:kYJBMarqueeLabelControllerRestartNotification];
 }
 
 + (void)controllerViewWillAppear:(UIViewController *)controller {
@@ -80,12 +80,12 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
 
 + (void)controllerLabelsShouldLabelize:(UIViewController *)controller {
     [YJBMarqueeLabel notifyController:controller
-                       withMessage:kMarqueeLabelShouldLabelizeNotification];
+                       withMessage:kYJBMarqueeLabelShouldLabelizeNotification];
 }
 
 + (void)controllerLabelsShouldAnimate:(UIViewController *)controller {
     [YJBMarqueeLabel notifyController:controller
-                       withMessage:kMarqueeLabelShouldAnimateNotification];
+                       withMessage:kYJBMarqueeLabelShouldAnimateNotification];
 }
 
 + (void)notifyController:(UIViewController *)controller withMessage:(NSString *)message
@@ -246,9 +246,9 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     
     // Add notification observers
     // Custom class notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewControllerShouldRestart:) name:kMarqueeLabelControllerRestartNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(labelsShouldLabelize:) name:kMarqueeLabelShouldLabelizeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(labelsShouldAnimate:) name:kMarqueeLabelShouldAnimateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewControllerShouldRestart:) name:kYJBMarqueeLabelControllerRestartNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(labelsShouldLabelize:) name:kYJBMarqueeLabelShouldLabelizeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(labelsShouldAnimate:) name:kYJBMarqueeLabelShouldAnimateNotification object:nil];
     
     // UIApplication state notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restartLabel) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -640,7 +640,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                                                               interval:interval
                                                                  delay:delayAmount];
     // Add completion block
-    [awayAnim setValue:@(YES) forKey:kMarqueeLabelAnimationCompletionBlock];
+    [awayAnim setValue:@(YES) forKey:kYJBMarqueeLabelAnimationCompletionBlock];
     
     // Add animation
     [self.subLabel.layer addAnimation:awayAnim forKey:@"position"];
@@ -723,7 +723,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     
     
     // Attach completion block
-    [labelAnimation setValue:@(YES) forKey:kMarqueeLabelAnimationCompletionBlock];
+    [labelAnimation setValue:@(YES) forKey:kYJBMarqueeLabelAnimationCompletionBlock];
     
     // Add animation
     [self.subLabel.layer addAnimation:labelAnimation forKey:@"position"];
