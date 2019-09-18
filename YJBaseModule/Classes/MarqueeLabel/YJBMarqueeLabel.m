@@ -25,7 +25,7 @@ typedef void(^MLAnimationCompletionBlock)(BOOL finished);
 #define CGFLOAT_LONG_DURATION 60*60*24*365 // One year in seconds
 
 // Helpers
-@interface GradientSetupAnimation : CABasicAnimation
+@interface YJBGradientSetupAnimation : CABasicAnimation
 @end
 
 @interface UIView (YJBMarqueeLabelHelpers)
@@ -52,7 +52,7 @@ typedef void(^MLAnimationCompletionBlock)(BOOL finished);
 // Support
 @property (nonatomic, copy) MLAnimationCompletionBlock scrollCompletionBlock;
 @property (nonatomic, strong) NSArray *gradientColors;
-CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
+CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
 
 @end
 
@@ -614,7 +614,7 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
     
     // Create animation for position
     CGPoint homeOrigin = self.homeLabelFrame.origin;
-    CGPoint awayOrigin = MLOffsetCGPoint(self.homeLabelFrame.origin, self.awayOffset);
+    CGPoint awayOrigin = YJBOffsetCGPoint(self.homeLabelFrame.origin, self.awayOffset);
     
     NSArray *values = nil;
     switch (self.marqueeType) {
@@ -686,7 +686,7 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
     // Create animation for sublabel positions, if needed
     if (!labelAnimation) {
         CGPoint homeOrigin = self.homeLabelFrame.origin;
-        CGPoint awayOrigin = MLOffsetCGPoint(self.homeLabelFrame.origin, self.awayOffset);
+        CGPoint awayOrigin = YJBOffsetCGPoint(self.homeLabelFrame.origin, self.awayOffset);
         NSArray *values = @[[NSValue valueWithCGPoint:homeOrigin],      // Initial location, home
                             [NSValue valueWithCGPoint:homeOrigin],      // Initial delay, at home
                             [NSValue valueWithCGPoint:awayOrigin]];     // Animation to home
@@ -808,7 +808,7 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
         [CATransaction commit];
         
         // Create animation for color change
-        GradientSetupAnimation *colorAnimation = [GradientSetupAnimation animationWithKeyPath:@"colors"];
+        YJBGradientSetupAnimation *colorAnimation = [YJBGradientSetupAnimation animationWithKeyPath:@"colors"];
         colorAnimation.fromValue = gradientMask.colors;
         colorAnimation.toValue = adjustedColors;
         colorAnimation.duration = 0.25;
@@ -1074,8 +1074,8 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    if ([anim isMemberOfClass:[GradientSetupAnimation class]]) {
-        GradientSetupAnimation *setupFade = (GradientSetupAnimation *)anim;
+    if ([anim isMemberOfClass:[YJBGradientSetupAnimation class]]) {
+        YJBGradientSetupAnimation *setupFade = (YJBGradientSetupAnimation *)anim;
         NSArray *finalColors = setupFade.toValue;
         if (finalColors) {
             [(CAGradientLayer *)self.layer.mask setColors:finalColors];
@@ -1539,11 +1539,11 @@ CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset);
 
 #pragma mark - Helpers
 
-CGPoint MLOffsetCGPoint(CGPoint point, CGFloat offset) {
+CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset) {
     return CGPointMake(point.x + offset, point.y);
 }
 
-@implementation GradientSetupAnimation
+@implementation YJBGradientSetupAnimation
 
 @end
 
