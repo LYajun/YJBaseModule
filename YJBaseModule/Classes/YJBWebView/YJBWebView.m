@@ -82,7 +82,7 @@
 }
 - (void)yj_loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL{
     self.isAddImgOnClick = YES;
-    [self loadHTMLString:[NSString yj_adaptWebViewForHtml:[self modifyImgSrc:string]] baseURL:baseURL];
+    [self loadHTMLString:[self modifyImgSrc:string] baseURL:baseURL];
 }
 - (void)yj_loadRequestWithUrlString:(NSString *)string{
     self.isAddImgOnClick = NO;
