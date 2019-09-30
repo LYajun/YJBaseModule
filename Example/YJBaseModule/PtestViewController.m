@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.closeFullScreenSideslip = NO;
+//    self.closeFullScreenSideslip = NO;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -27,9 +27,8 @@
      NSLog(@"%@ pop 了啊",NSStringFromClass(self.class));
 }
 - (IBAction)push:(id)sender {
-    [self yj_setLoadingGifViewShow:YES];
-//    ViewController1 *vc = [[ViewController1 alloc] init];
-//    [self.navigationController pushViewController:vc animated:YES];
+    ViewController1 *vc = [[ViewController1 alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
