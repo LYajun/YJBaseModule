@@ -14,6 +14,7 @@
 
 @interface YJViewController ()<WKNavigationDelegate>
 @property (strong, nonatomic) YJBWebView *webView;
+@property (strong, nonatomic) YJBView *bView;
 @end
 
 @implementation YJViewController
@@ -23,6 +24,12 @@
 	
     self.title = @"hao de ";
     
+    
+//    [self.view addSubview:self.bView];
+//    [self.bView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view);
+//    }];
+//    [self.bView yj_setNoDataViewShow:YES isSearch:NO];
 //    [self.view addSubview:self.webView];
 //    [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.edges.equalTo(self.view);
@@ -95,5 +102,11 @@
         _webView.scrollView.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
     }
     return _webView;
+}
+- (YJBView *)bView{
+    if (!_bView) {
+        _bView = [[YJBView alloc] init];
+    }
+    return _bView;
 }
 @end
