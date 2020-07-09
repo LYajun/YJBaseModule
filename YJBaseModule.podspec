@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YJBaseModule'
-  s.version          = '1.2.7'
+  s.version          = '1.2.8'
   s.summary          = '基类'
 
   s.description      = <<-DESC
@@ -28,6 +28,7 @@ TODO: Add long description of the pod here.
 s.subspec 'Manager' do |manager|
     manager.source_files = 'YJBaseModule/Classes/Manager/**/*'
     manager.dependency 'YJExtensions'
+    manager.dependency 'LGBundle'
 end
 
 s.subspec 'MarqueeLabel' do |marqueeLabel|
