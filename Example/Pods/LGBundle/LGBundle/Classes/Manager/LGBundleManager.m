@@ -9,7 +9,9 @@
 
 @interface LGBundleManager ()
 @property (nonatomic,strong) NSArray *loadingImgs;
-@property (nonatomic,strong) NSBundle *currentBundle;
+@property (nonatomic,strong) NSBundle *bundle;
+@property (nonatomic,strong) NSBundle *barBundle;
+
 @end
 @implementation LGBundleManager
 + (LGBundleManager *)defaultManager{
@@ -23,7 +25,9 @@
 }
 
 - (void)configure{
-    _currentBundle = [NSBundle bundleWithPath:[[NSBundle bundleForClass:LGBundleManager.class] pathForResource:@"LGBundle" ofType:@"bundle"]];
+    _bundle = [NSBundle bundleWithPath:[[NSBundle bundleForClass:LGBundleManager.class] pathForResource:@"Bundle" ofType:@"bundle"]];
+    _barBundle = [NSBundle bundleWithPath:[[NSBundle bundleForClass:LGBundleManager.class] pathForResource:@"BarBundle" ofType:@"bundle"]];
+  
     
     [self initLoadingImg];
 }
@@ -45,19 +49,27 @@
 }
 
 - (NSString *)emptyDir{
-    return [[_currentBundle resourcePath] stringByAppendingPathComponent:@"Empty"];
+    return [[_bundle resourcePath] stringByAppendingPathComponent:@"empty"];
 }
 - (NSString *)errorDir{
-    return [[_currentBundle resourcePath] stringByAppendingPathComponent:@"Error"];
+    return [[_bundle resourcePath] stringByAppendingPathComponent:@"error"];
 }
 - (NSString *)searchEmptyDir{
-    return [[_currentBundle resourcePath] stringByAppendingPathComponent:@"SearchEmpty"];
+    return [[_bundle resourcePath] stringByAppendingPathComponent:@"search_empty"];
 }
 - (NSString *)loadingDir{
-    return [[_currentBundle resourcePath] stringByAppendingPathComponent:@"Loading1"];
+    return [[_bundle resourcePath] stringByAppendingPathComponent:@"loading1"];
 }
-- (NSString *)pathWithName:(NSString *)name{
-    return [[_currentBundle resourcePath] stringByAppendingPathComponent:name];
+
+- (NSString *)navbarBgDir{
+    return [[_barBundle resourcePath] stringByAppendingPathComponent:@"navbar_bg"];
+}
+
+- (NSString *)pathInBundleWithName:(NSString *)name{
+    return [[_bundle resourcePath] stringByAppendingPathComponent:name];
+}
+- (NSString *)pathInBarBundleWithName:(NSString *)name{
+     return [[_barBundle resourcePath] stringByAppendingPathComponent:name];
 }
 
 @end

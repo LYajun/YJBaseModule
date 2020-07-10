@@ -12,7 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LGBundleManager : NSObject
 + (LGBundleManager *)defaultManager;
 
-- (NSBundle *)currentBundle;
+- (NSBundle *)bundle;
+- (NSBundle *)barBundle;
+
+
 - (NSArray *)loadingImgs;
 
 - (NSString *)emptyDir;
@@ -20,7 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)searchEmptyDir;
 - (NSString *)loadingDir;
 
-- (NSString *)pathWithName:(NSString *)name;
+- (NSString *)navbarBgDir;
+
+- (NSString *)pathInBundleWithName:(NSString *)name;
+- (NSString *)pathInBarBundleWithName:(NSString *)name;
+
 @end
 
 NS_ASSUME_NONNULL_END

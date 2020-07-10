@@ -28,7 +28,7 @@
 
 - (void)configure{
     _currentBundle = [NSBundle yj_bundleWithCustomClass:YJBManager.class bundleName:@"YJBaseModule"];
-    _lgBundle = [LGBundleManager defaultManager].currentBundle;
+    _lgBundle = [LGBundleManager defaultManager].bundle;
     
     _loadingImgs = [LGBundleManager defaultManager].loadingImgs;
     

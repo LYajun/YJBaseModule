@@ -14,18 +14,20 @@ PODS:
   - LGAlertHUD/YJSheetView (1.1.3):
     - Masonry
     - YJExtensions
-  - LGBundle (1.0.0)
+  - LGBundle/Bundle (1.0.3):
+    - LGBundle/Manager
+  - LGBundle/Manager (1.0.3)
   - Masonry (1.1.0)
   - MJExtension (3.2.2)
   - MJRefresh (3.4.3)
   - YJActivityIndicatorView (1.0.0)
-  - YJBaseModule (1.2.8):
-    - YJBaseModule/Base (= 1.2.8)
-    - YJBaseModule/Manager (= 1.2.8)
-    - YJBaseModule/MarqueeLabel (= 1.2.8)
-    - YJBaseModule/YJBHpple (= 1.2.8)
-    - YJBaseModule/YJBWebView (= 1.2.8)
-  - YJBaseModule/Base (1.2.8):
+  - YJBaseModule (1.2.9):
+    - YJBaseModule/Base (= 1.2.9)
+    - YJBaseModule/Manager (= 1.2.9)
+    - YJBaseModule/MarqueeLabel (= 1.2.9)
+    - YJBaseModule/YJBHpple (= 1.2.9)
+    - YJBaseModule/YJBWebView (= 1.2.9)
+  - YJBaseModule/Base (1.2.9):
     - LGAlertHUD
     - Masonry
     - MJExtension
@@ -33,12 +35,12 @@ PODS:
     - YJActivityIndicatorView
     - YJBaseModule/Manager
     - YJExtensions
-  - YJBaseModule/Manager (1.2.8):
-    - LGBundle
+  - YJBaseModule/Manager (1.2.9):
+    - LGBundle/Bundle
     - YJExtensions
-  - YJBaseModule/MarqueeLabel (1.2.8)
-  - YJBaseModule/YJBHpple (1.2.8)
-  - YJBaseModule/YJBWebView (1.2.8):
+  - YJBaseModule/MarqueeLabel (1.2.9)
+  - YJBaseModule/YJBHpple (1.2.9)
+  - YJBaseModule/YJBWebView (1.2.9):
     - Masonry
     - YJBaseModule/Manager
     - YJBaseModule/MarqueeLabel
@@ -77,12 +79,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   LGAlertHUD: d14fa1d2ab68418cf8f0a1fcb1a8d9eee6a4841b
-  LGBundle: 5be2ab26d001da80824345f3660936fa96ff09ae
+  LGBundle: 14ca72907347cbeaa0cfa62f80f387d093e0d4ce
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJExtension: d9b9c74cbdeb724c1e9ecbb157b318276e62e876
   MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
   YJActivityIndicatorView: f51112fa59d69762bd6147cf0da573ff2a9a0215
-  YJBaseModule: d81871761c514d54786fef05370da8226f69f226
+  YJBaseModule: d1a40035009c6c4b797096bfa33c2f2439d1358f
   YJExtensions: f38d0c8b05ea3cd52bde07bdd35bb913065abbc8
 
 PODFILE CHECKSUM: fbd86e2512a077e688239ad177feaef9d7bdc57f
