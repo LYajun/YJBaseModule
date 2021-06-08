@@ -53,6 +53,7 @@
     _yj_noDataSearchImgOffsetY = -80;
     _yj_loadErrorImgOffsetY = -15;
  
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateNoti:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -74,15 +75,17 @@
         ((YJBNavigationController *)self.navigationController).backGesture.enabled = YES;
     }
 }
-
+- (void)didRotateNoti:(NSNotification *)noti{
+    if (self.navigationController) {
+        self.navigationController.navigationBar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [self.view yj_customNavBarHeight]);
+    }
+}
 #pragma mark - UINavigationControllerDelegate
 - (void)willMoveToParentViewController:(UIViewController *)parent{
     [super willMoveToParentViewController:parent];
-    NSLog(@"%s,%@",__FUNCTION__,NSStringFromClass(self.class));
 }
 - (void)didMoveToParentViewController:(UIViewController *)parent{
     [super didMoveToParentViewController:parent];
-    NSLog(@"%s,%@",__FUNCTION__,NSStringFromClass(self.class));
     if(!parent){
         [self yj_interactivePopGestureAction];
     }
@@ -173,6 +176,12 @@
     _yj_loadingFlowerTitle = yj_loadingFlowerTitle;
     self.loadingFlowerLab.text = yj_loadingFlowerTitle;
 }
+- (void)setLoadingViewBgColor:(UIColor *)loadingViewBgColor{
+    _loadingViewBgColor = loadingViewBgColor;
+    self.loadingGifView.backgroundColor = loadingViewBgColor;
+    self.noDataView.backgroundColor = loadingViewBgColor;
+    self.loadErrorView.backgroundColor = loadingViewBgColor;
+}
 - (void)setYj_noDataTitle:(NSString *)yj_noDataTitle{
     _yj_noDataTitle = yj_noDataTitle;
     self.noDataLab.text = yj_noDataTitle;
@@ -187,7 +196,11 @@
     if (isSearchEmpty) {
         self.noDataLab.text = [YJBManager defaultManager].searchEmptyTitle;
     }else{
-        self.noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
+        if (_yj_noDataTitle && _yj_noDataTitle.length > 0) {
+            self.noDataLab.text = _yj_noDataTitle;
+        }else{
+            self.noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
+        }
     }
 }
 #pragma mark - Loading
@@ -221,7 +234,7 @@
 - (void)yj_setNoDataViewShow:(BOOL)show isSearch:(BOOL)isSearch belowView:(nullable UIView *)belowView{
     [self resetLoadingView];
     [self setSearchEmpty:isSearch];
-    [self setShowOnBackgroundView:self.noDataView show:show];
+    [self setShowOnBackgroundView:self.noDataView show:show belowView:belowView];
 }
 
 - (void)yj_setLoadErrorViewShow:(BOOL)show{

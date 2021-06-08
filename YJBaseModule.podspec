@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YJBaseModule'
-  s.version          = '1.2.9'
+  s.version          = '1.3.0'
   s.summary          = '基类'
 
   s.description      = <<-DESC
@@ -43,7 +43,7 @@ end
 
 s.subspec 'YJBWebView' do |webView|
     webView.source_files = 'YJBaseModule/Classes/YJBWebView/**/*'
-     webView.dependency 'YJBaseModule/MarqueeLabel'
+    webView.dependency 'YJBaseModule/MarqueeLabel'
     webView.dependency 'YJBaseModule/YJBHpple'
     webView.dependency 'YJBaseModule/Manager'
     webView.dependency 'Masonry'
@@ -61,7 +61,16 @@ s.subspec 'Base' do |base|
     base.dependency 'YJActivityIndicatorView'
 end
 
-
+s.subspec 'YJRRichTextEditor' do |richTextEditor|
+  richTextEditor.subspec 'ColorPicker' do |colorPicker|
+     colorPicker.source_files = 'YJBaseModule/Classes/YJRRichTextEditor/ColorPicker/**/*'
+  end
+  richTextEditor.subspec 'TextView' do |textView|
+     textView.source_files = 'YJBaseModule/Classes/YJRRichTextEditor/TextView/**/*'
+  end
+  richTextEditor.source_files = 'YJBaseModule/Classes/YJRRichTextEditor/*{h,m}'
+  richTextEditor.dependency 'YJBaseModule/Manager'
+end
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

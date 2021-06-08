@@ -21,13 +21,14 @@ PODS:
   - MJExtension (3.2.2)
   - MJRefresh (3.4.3)
   - YJActivityIndicatorView (1.0.0)
-  - YJBaseModule (1.2.9):
-    - YJBaseModule/Base (= 1.2.9)
-    - YJBaseModule/Manager (= 1.2.9)
-    - YJBaseModule/MarqueeLabel (= 1.2.9)
-    - YJBaseModule/YJBHpple (= 1.2.9)
-    - YJBaseModule/YJBWebView (= 1.2.9)
-  - YJBaseModule/Base (1.2.9):
+  - YJBaseModule (1.3.0):
+    - YJBaseModule/Base (= 1.3.0)
+    - YJBaseModule/Manager (= 1.3.0)
+    - YJBaseModule/MarqueeLabel (= 1.3.0)
+    - YJBaseModule/YJBHpple (= 1.3.0)
+    - YJBaseModule/YJBWebView (= 1.3.0)
+    - YJBaseModule/YJRRichTextEditor (= 1.3.0)
+  - YJBaseModule/Base (1.3.0):
     - LGAlertHUD
     - Masonry
     - MJExtension
@@ -35,17 +36,25 @@ PODS:
     - YJActivityIndicatorView
     - YJBaseModule/Manager
     - YJExtensions
-  - YJBaseModule/Manager (1.2.9):
+  - YJBaseModule/Manager (1.3.0):
     - LGBundle/Bundle
     - YJExtensions
-  - YJBaseModule/MarqueeLabel (1.2.9)
-  - YJBaseModule/YJBHpple (1.2.9)
-  - YJBaseModule/YJBWebView (1.2.9):
+  - YJBaseModule/MarqueeLabel (1.3.0)
+  - YJBaseModule/YJBHpple (1.3.0)
+  - YJBaseModule/YJBWebView (1.3.0):
     - Masonry
     - YJBaseModule/Manager
     - YJBaseModule/MarqueeLabel
     - YJBaseModule/YJBHpple
     - YJExtensions
+  - YJBaseModule/YJRRichTextEditor (1.3.0):
+    - YJBaseModule/Manager
+    - YJBaseModule/YJRRichTextEditor/ColorPicker (= 1.3.0)
+    - YJBaseModule/YJRRichTextEditor/TextView (= 1.3.0)
+  - YJBaseModule/YJRRichTextEditor/ColorPicker (1.3.0):
+    - YJBaseModule/Manager
+  - YJBaseModule/YJRRichTextEditor/TextView (1.3.0):
+    - YJBaseModule/Manager
   - YJExtensions (1.2.8):
     - YJExtensions/Foundation (= 1.2.8)
     - YJExtensions/UIKit (= 1.2.8)
@@ -84,7 +93,7 @@ SPEC CHECKSUMS:
   MJExtension: d9b9c74cbdeb724c1e9ecbb157b318276e62e876
   MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
   YJActivityIndicatorView: f51112fa59d69762bd6147cf0da573ff2a9a0215
-  YJBaseModule: d1a40035009c6c4b797096bfa33c2f2439d1358f
+  YJBaseModule: 4a05733d82d428337116c7cb3b50deb3c06c581a
   YJExtensions: f38d0c8b05ea3cd52bde07bdd35bb913065abbc8
 
 PODFILE CHECKSUM: fbd86e2512a077e688239ad177feaef9d7bdc57f

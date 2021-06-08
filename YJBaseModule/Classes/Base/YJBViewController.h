@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)yj_setLoadingGifViewShow:(BOOL)show;
 - (void)yj_setLoadingFlowerTitleViewShow:(BOOL)show;
 
+@property (nonatomic,strong) UIColor *loadingViewBgColor;
 @property (copy, nonatomic) NSString *yj_loadingGifTitle;
 @property (copy, nonatomic) NSString *yj_loadingFlowerTitle;
 

@@ -11,6 +11,7 @@
 
 @interface YJBTableView ()
 @property (nonatomic,strong) MJRefreshAutoNormalFooter *currentFooter;
+@property (nonatomic,strong) MJRefreshNormalHeader *currentHeader;
 @end
 @implementation YJBTableView
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
@@ -41,6 +42,7 @@
         header.stateLabel.font = [UIFont systemFontOfSize:[YJBManager defaultManager].refreshHeaderStateTitleSize];
         header.stateLabel.textColor = [YJBManager defaultManager].refreshHeaderStateTitleColor;
         self.mj_header = header;
+        self.currentHeader = header;
     }
     
     if (installFooter) {
@@ -59,11 +61,29 @@
         self.currentFooter = footer;
     }
 }
+- (void)setHeaderStateColor:(UIColor *)headerStateColor{
+    _headerStateColor = headerStateColor;
+    if (self.currentHeader) {
+        self.currentHeader.stateLabel.textColor = headerStateColor;
+    }
+}
+- (void)setFooterStateColor:(UIColor *)footerStateColor{
+    _footerStateColor = footerStateColor;
+    if (self.currentFooter) {
+        self.currentFooter.stateLabel.textColor = footerStateColor;
+    }
+}
 - (void)setHideFooterStateLab:(BOOL)hideFooterStateLab{
     _hideFooterStateLab = hideFooterStateLab;
     if (self.currentFooter) {
         self.currentFooter.stateLabel.hidden = hideFooterStateLab;
     }
+}
+- (BOOL)headerIsRefreshing{
+    if (self.mj_header) {
+        return self.mj_header.isRefreshing;
+    }
+    return NO;
 }
 - (void)endHeaderRefreshing{
     if (self.mj_header) {

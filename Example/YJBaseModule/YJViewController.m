@@ -11,7 +11,7 @@
 #import <YJBaseModule/YJBWebView.h>
 #import <Masonry/Masonry.h>
 #import <LGAlertHUD/LGAlertHUD.h>
-
+#import "ViewController4.h"
 @interface YJViewController ()<WKNavigationDelegate>
 @property (strong, nonatomic) YJBWebView *webView;
 @property (strong, nonatomic) YJBView *bView;
@@ -23,7 +23,7 @@
     [super viewDidLoad];
 	
     self.title = @"hao de ";
-    
+   
     
 //    [self.view addSubview:self.bView];
 //    [self.bView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -55,7 +55,7 @@
 }
 - (IBAction)push:(id)sender {
     
-    PtestViewController *vc = [[PtestViewController alloc] init];
+    ViewController4 *vc = [[ViewController4 alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)cancel:(id)sender {

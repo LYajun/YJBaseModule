@@ -36,6 +36,7 @@ UIKIT_EXTERN NSString *const YJWebViewDictionaryNotifiaction;
 @end
 
 @interface YJBWebView : WKWebView
+@property (nonatomic,assign) BOOL translateDisable;
 @property (nonatomic,assign) BOOL noteEnable;
 @property (nonatomic, assign) id<YJBWeakWebMenuDelegate> menuDelegate;
 - (void)showNavigationBarAtDidFinishNavigation;

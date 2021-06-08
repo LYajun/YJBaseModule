@@ -10,7 +10,7 @@
 #import "YJBHpple.h"
 #import "YJBWebNavigationView.h"
 #import <Masonry/Masonry.h>
-
+#import "YJBManager.h"
 
 
 NSString *const YJWebViewEnglishToChineseNotifiaction = @"YJWebViewEnglishToChineseNotifiaction";
@@ -56,7 +56,7 @@ NSString *const YJWebViewDictionaryNotifiaction = @"YJWebViewDictionaryNotifiact
     return self;
 }
 - (void)createMenu{
-    [self becomeFirstResponder];
+//    [self becomeFirstResponder];
     UIMenuController *popMenu = [UIMenuController sharedMenuController];
     
     UIMenuItem *englishToChinese = [[UIMenuItem alloc] initWithTitle:@"英译中" action:@selector(englishToChinese:)];
@@ -122,7 +122,7 @@ NSString *const YJWebViewDictionaryNotifiaction = @"YJWebViewDictionaryNotifiact
     
    if (action == @selector(englishToChinese:) ||
        action == @selector(chineseToEnglish:)) {
-       return YES;
+       return !self.translateDisable;
    }
     if (action == @selector(newNote:)) {
         return self.noteEnable;
@@ -187,28 +187,36 @@ NSString *const YJWebViewDictionaryNotifiaction = @"YJWebViewDictionaryNotifiact
     // 根据标签来进行过滤
     NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];
     if (imgArray && imgArray.count > 0) {
-        
+        NSMutableArray *srcResplaceArr = [NSMutableArray array];
         [imgArray enumerateObjectsUsingBlock:^(YJBHppleElement *hppleElement, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *attributes = hppleElement.attributes;
             NSString *imgSrc = [attributes objectForKey:@"src"];
-            if ([attributes.allKeys containsObject:@"onclick"]) {
-                NSString *onclick = [NSString stringWithFormat:@"onclick=\"%@\"",[attributes objectForKey:@"onclick"]];
-                NSString *audiourl = imgSrc;
-                if ([attributes.allKeys containsObject:@"audiourl"]) {
-                    audiourl = [attributes objectForKey:@"audiourl"];
-                }
-                NSString *onclickReplace = [NSString stringWithFormat:@"onclick=\"yjClickAction('%@')\"",[audiourl stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
-                html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
-            }else{
-                NSString *onclick = [NSString stringWithFormat:@"src=\"%@\"",imgSrc];
-                if (![html containsString:onclick]) {
-                    onclick = [NSString stringWithFormat:@"src='%@'",imgSrc];
-                    if (![html containsString:onclick]) {
-                        onclick = [NSString stringWithFormat:@"src = '%@'",imgSrc];
+            NSString *classStr = [attributes objectForKey:@"class"];
+            BOOL isAddOnclick = YES;
+            if (classStr && classStr.length > 0 && ([classStr.lowercaseString containsString:@"yaoshi"] || [classStr.lowercaseString containsString:@"audioimg"] || [classStr.lowercaseString containsString:@"videoimg"] || [classStr.lowercaseString containsString:@"orallanguageimg"])) {
+                isAddOnclick = NO;
+            }
+            if (imgSrc && imgSrc.length > 0 && isAddOnclick && ![srcResplaceArr containsObject:imgSrc]) {
+                [srcResplaceArr addObject:imgSrc];
+                if ([attributes.allKeys containsObject:@"onclick"]) {
+                    NSString *onclick = [NSString stringWithFormat:@"onclick=\"%@\"",[attributes objectForKey:@"onclick"]];
+                    NSString *audiourl = imgSrc;
+                    if ([attributes.allKeys containsObject:@"audiourl"]) {
+                        audiourl = [attributes objectForKey:@"audiourl"];
                     }
+                    NSString *onclickReplace = [NSString stringWithFormat:@"onclick=\"yjClickAction('%@')\"",[audiourl stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
+                    html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
+                }else{
+                    NSString *onclick = [NSString stringWithFormat:@"src=\"%@\"",imgSrc];
+                    if (![html containsString:onclick]) {
+                        onclick = [NSString stringWithFormat:@"src='%@'",imgSrc];
+                        if (![html containsString:onclick]) {
+                            onclick = [NSString stringWithFormat:@"src = '%@'",imgSrc];
+                        }
+                    }
+                    NSString *onclickReplace = [NSString stringWithFormat:@"%@ onclick=\"yjClickAction('%@')\"",onclick,[imgSrc stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
+                    html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
                 }
-                NSString *onclickReplace = [NSString stringWithFormat:@"%@ onclick=\"yjClickAction('%@')\"",onclick,[imgSrc stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
-                html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
             }
         }];
     }
@@ -219,7 +227,7 @@ NSString *const YJWebViewDictionaryNotifiaction = @"YJWebViewDictionaryNotifiact
     return @[@"wav",@"mp3",@"pcm",@"amr",@"aac",@"caf"];
 }
 + (NSArray *)yj_imageAllFileExtension{
-    return @[@"png",@"jpg",@"gif",@"jpeg"];
+    return @[@"png",@"jpg",@"gif",@"jpeg",@"wmf",@"emf"];
 }
 
 + (BOOL)yj_isVoiceFileWithExtName:(NSString *)extName{
@@ -261,7 +269,7 @@ NSString *const YJWebViewDictionaryNotifiaction = @"YJWebViewDictionaryNotifiact
 }
 + (NSString *)yj_autoFitImgSizeJSString{
 //    return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.width > maxwidth){img.style.width = '90%';img.style.height = 'auto';}}";
-    return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.getAttribute('width')){ img.removeAttribute('width');img.removeAttribute('height');} if(img.style.maxWidth){if(img.style.maxWidth > '90%'){img.style.maxWidth = '90%';}}else{ img.style.maxWidth = '90%';}}";
+    return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.width > maxwidth){img.style.width = '90%';img.style.height = 'auto';} if(img.style){img.style.display = 'inline-block';img.style.overflow = 'hidden';if (img.width > maxwidth*0.6){img.style.marginBottom = '10px';}}}";
 }
 
 + (NSString *)yj_autoFitTableSizeJSString{

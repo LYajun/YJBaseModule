@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <YJBaseModule/YJRRichTextEditor.h>
 
-@interface ViewController4 : UIViewController
+@interface ViewController4 : YJRRichTextEditor
 
 @end
