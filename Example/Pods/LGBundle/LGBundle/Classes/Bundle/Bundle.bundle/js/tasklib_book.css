@@ -1,0 +1,363 @@
+body {text-align:left;}
+p{word-break: break-word;word-wrap: break-word;clear:both;line-height: 22px;}
+/*作答区域外层*/
+.answer-body {border-radius: 5px;display:inline-block;margin-bottom:-1px;margin-top:8px;margin-bottom: 5px;}
+.answer-body[answer-showanswer='1']{display:inline;}
+.answer-body[data-astatus='0'] {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.boxQue .answer-body{
+    line-height: 20px;
+}
+.boxQue .answer-text{
+    height: 20px;
+    display:inline !important;
+}
+p .answer-body{
+    margin-left:5px;
+}
+p .answer-body:first-child{
+    margin-left:0px;
+}
+.answer-border {border:solid #66b6ff 1px;}
+.noanswer-border {border-bottom: 1px solid #66b6ff;display:inline !important;}
+/*作答音频区域*/
+.answer-audio-range { border-radius: 5px;border:solid #66b6ff 1px;height:20px;display:none;margin-bottom:-6px;}
+.answer-audio-range img {float:left;margin-left:3px;margin-top:2px;width:15px;height:15px;}
+.answer-audio-range span { float:left;margin-left:4px; margin-right:5px;color:#6ab7ff;line-height:19px;font-size:15px;}
+
+/*答题点区域*/
+.answer-point-range {display:inline-block;}
+.answer-point-range img {float:left;margin-left:3px;margin-top:3px;width:16px;height:16px;}
+.answer-point-range span { float:left;margin-left:3px; margin-right:7px;color:#6ab7ff;line-height:22px;font-size:16px;}
+.answer-point-range-div{display: block;border: 1px solid #6ab7ff;height: 22px;border-radius: 5px;position: relative;left: 0px;top: 5px;}
+.select-answer[data-astatus='0'] .answer-point-range-div{
+    border: none !important;
+    background:#eaf6ff !important;
+}
+.underlinePart{
+    margin-bottom:10px;
+}
+/*作答内容*/
+.answer-text { margin-left:5px; margin-right:8px;color:#6ab7ff;font-size:16px;word-break:break-word;word-wrap:break-word;display:inline-block;text-indent:0;display:none;border-bottom: 1px solid #979797;margin-bottom:5px;padding-bottom:1px;}
+/*评阅及点击相关样式*/
+.no-answer { color:#ff6600;text-decoration:none;border-bottom: 1px solid #979797;}
+.answer-body .no-answer { display:inline !important;}
+.select-answer[data-astatus='1'],.select-answer[data-astatus='2'],.select-answer[data-astatus='3']{
+    border: none !important;
+    background:#eaf6ff !important;
+}
+.select-answer[data-astatus='1'][data-errstatus='1'],.select-answer[data-astatus='2'][data-errstatus='1']{
+    background:#ffefe4 !important;
+}
+.select-answer .answer-text {color:#6ab7ff;}
+.select-answer .answer-point-range span {color:#6ab7ff;}
+.select-answer[data-astatus='1'][data-errstatus='1'] .answer-text,.select-answer[data-astatus='2'][data-errstatus='1'] .answer-text {color:#ff6600;}
+.select-answer[data-astatus='1'][data-errstatus='1'] .answer-point-range span,.select-answer[data-astatus='2'][data-errstatus='1'] .answer-point-range span {color:#ff6600;}
+.select-answer[answer-showanswer='1'][data-astatus='1'][data-errstatus='1'] .answer-text,.select-answer[answer-showanswer='1'][data-astatus='1'][data-errstatus='1'] .answer-text{
+    background:#ffefe4 !important;
+}
+.select-answer[answer-showanswer='1'][data-astatus='1'][data-errstatus='0'] .answer-text,.select-answer[answer-showanswer='1'][data-astatus='1'][data-errstatus='0'] .answer-text{
+    background:#eaf6ff !important;
+}
+/*一题多空样式*/
+.checkbox {
+    display:inline;
+    background:#fff;
+}
+
+/*.docxParagraphs {border:solid red 1px;}*/
+.answertext {border:0px; border-bottom:solid #6ab7ff 1px; padding-left:5px; color:#6ab7ff;word-break:keep-all;}
+.btn-bgimg { background:url(file:///android_asset/js/update-answer.png) no-repeat;background-position: left 3px;padding-left:18px;font-size:16px;}
+
+.div-container {
+    position: relative;
+    padding: 5px;
+    border: 2px solid #EEE;
+    width: 400px;
+    height: 600px;
+    margin: 0 auto;
+}
+.div-container-child {
+    position: absolute;
+    padding: 5px;
+    width: 400px;
+    height: 600px;
+    margin: 0 auto;
+}
+.p-title-top{
+    margin-top: -153px!important;
+    height: 153px;
+    font-size: 18px!important;
+}
+.scroll-view {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    height: auto;
+    width: auto;
+    *zoom: 0;
+    *z-index: 100;
+    _position: absolute;
+    _top: expression(eval(document.documentElement.scrollTop));
+}
+.topImg{
+    width: 100%!important;
+    height: auto;
+}
+.underlineContent{
+    user-select:none;
+    display:inline;
+    line-height: 35px;
+}
+.TableContainer{
+    width: 100px;
+    height: auto;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+}
+.TableContainer::-webkit-scrollbar{
+    display:none;
+}
+.PSBar{
+    height: 3px;
+    line-height: 3px;
+    position: relative;
+    left: 0px;
+    bottom: -1px;
+    background-color: #eee;
+    z-index: 2;
+    overflow:hidden;
+    margin-bottom:15px;
+}
+.CSBar{
+    height: 3px;
+    line-height: 3px;
+    position: relative;
+    left: 0px;
+    bottom: 0px;
+    background-color: #ccc;
+    z-index: 3;
+    border-radius:3px;
+}
+.TableContainer[data-isaflag='1'] td{
+    min-width:205px !important;
+}
+td p{
+    padding: 5px 0px;
+}
+td p .answer-body{
+    height:27px;
+}
+.TableContainer td span,.TableContainer td{
+    white-space:normal !important;
+    word-break:normal !important;
+}
+.TableContainer[data-isaflag='1'] table{
+    table-layout:fixed;
+    word-wrap:break-word;
+    word-break:break-all;
+}
+table tr td:last-child{
+    padding-right:10px !important;
+}
+.cBoxCls{
+    width: 15px;
+	height: 15px;
+	border-radius: 4px;
+	border: solid 1px #92d0ff;
+    display:inline-block;
+    position: relative;
+    top: 2px;
+}
+.cBoxCls[data-status='1'] {
+    background-image: url('../Images/checkbox2x.png');
+    background-repeat:no-repeat;
+    background-position: 0px 2px;
+    background-size:15px 10.5px;
+}
+/*#region音频插件*/
+.ListenDiv{
+    height:48px;
+    border-radius:5px;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    user-select:none;
+}
+.ListenDiv[data-status='1']{
+    height:80px;
+}
+.ListenDiv .LDivTop {
+    width: calc(100% - 20px);
+    height: 29px;
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    margin: 0 auto;
+    overflow: hidden;
+}
+.LDivTop .LDivTItem{
+    width:85px;
+    height:29px;
+    float:left;
+    color:rgba(10,169,251,0.6);
+    font-size: 16px;
+    text-align:center;
+    line-height: 26px;
+    color: #44bfff;
+}
+.LDivTItem:first-child{
+    margin-left:10px !important;
+}
+.LDivTItem[data-selected='1']{
+    font-weight: bold;
+    font-stretch: normal;
+    letter-spacing: 0px;
+    color:rgba(10,169,251,1);
+    border-bottom:2px solid #fff;
+}
+.SImg{
+    width: 11px;
+    height: 7px;
+    background-image: url('../Images/select2x.png');
+    background-repeat:no-repeat;
+    position:relative;
+    background-size:100%;
+    left:50px;
+    top:-53px
+}
+.ListenDiv .LDivFooter{
+    width:calc(100%);
+    height:47px;
+    margin:0 auto;
+    overflow:hidden;
+    background-color:rgba(10,169,251,1);
+    box-shadow: 0px 2px 3px rgba(10,169,251,0.2);
+    border-radius: 24px;
+}
+.LDivFooter .LDFPlayS {
+    width:40px;
+    height:40px;
+    float: left;
+    background-image: url('../Images/Listen/播放2@3x.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin-left: 10px;
+    margin-top: 4px;
+    border-radius:20px;
+    user-select:none;
+}
+.LDFPlayS[data-playstatus='1'] {
+    background-image: url('../Images/Listen/暂停2@3x.png');
+}
+.LDivFooter .LDFPauseS {
+    display:none;  /*取消重置*/
+    width:24px;
+    height:24px;
+    float:left;
+    background-image: url('../Images/Listen/停止@2x.png');
+    background-repeat: no-repeat;
+    margin-top: 12px;
+    background-size: 100%;
+    margin-left:10px;
+    border-radius:12px;
+    user-select:none;
+}
+.LDFPWhite{
+    width:0px;
+    height: 2px;
+    position:relative;
+    left: 0px;
+    top: 0px;
+    background-color: #fff;
+}
+.LDivFooter .LDFProcS {
+    /*width:calc(100% - 228px); 取消重置*/
+    width:calc(100% - 194px);
+    height:2px;
+    float:left;
+    background-color:rgba(6,142,216,1);
+    margin-left: 12px;
+    margin-top: 23px;
+}
+.LDFProcS .LDFProcImg {
+    width:30px;
+    height:48px;
+    position:relative;
+    left:-15px;
+    top:-25px;
+    background-image: url('../Images/Listen/拉杆@2x.png');
+    background-size: 10px 10px;
+    background-repeat:no-repeat;
+    background-position-y: 19px;
+    background-position-x: 10px;
+}
+.LDivFooter .LDFTimerS{
+    width: 100px;
+    line-height:16px;
+    float:right;
+    margin-top:14px;
+    text-align: right;
+    overflow:hidden;
+    margin-right: 24px;
+    color:rgba(255,255,255,0.6);
+    user-select:none;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='80'] {
+    margin-top:13px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='80'] span{
+    font-size: 18px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='100'] {
+    margin-top:12px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='100'] span{
+    font-size: 16px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='120'] {
+    margin-top:12px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='120'] span{
+    font-size: 14px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='140'] {
+    margin-top:10px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='140'] span{
+    font-size: 12px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='160'] {
+    margin-top:8px;
+}
+.LDFTimerS[data-mtype='1'][data-fsFlag='160'] span{
+    font-size: 10px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='80'] {
+    margin-top:19px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='80'] span{
+    font-size: 18px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='100'] {
+    margin-top:16px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='100'] span{
+    font-size: 16px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='120'] {
+    margin-top:14px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='120'] span{
+    font-size: 14px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='140'] {
+    margin-top:12px;
+}
+.LDFTimerS[data-mtype='2'][data-fsFlag='140'] span{
+    font-size: 12px;
+}
+/*#endregion音频插件*/
+img.cAStauts[showflag='0']{
+    opacity:0;
+}

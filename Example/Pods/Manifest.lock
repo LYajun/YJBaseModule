@@ -1,34 +1,37 @@
 PODS:
-  - LGAlertHUD (1.1.3):
-    - LGAlertHUD/AlertView (= 1.1.3)
-    - LGAlertHUD/AnswerAlertView (= 1.1.3)
-    - LGAlertHUD/YJSheetView (= 1.1.3)
+  - LGAlertHUD (1.1.4):
+    - LGAlertHUD/AlertView (= 1.1.4)
+    - LGAlertHUD/AnswerAlertView (= 1.1.4)
+    - LGAlertHUD/YJSheetView (= 1.1.4)
     - Masonry
     - YJExtensions
-  - LGAlertHUD/AlertView (1.1.3):
+  - LGAlertHUD/AlertView (1.1.4):
     - Masonry
     - YJExtensions
-  - LGAlertHUD/AnswerAlertView (1.1.3):
+  - LGAlertHUD/AnswerAlertView (1.1.4):
     - Masonry
     - YJExtensions
-  - LGAlertHUD/YJSheetView (1.1.3):
+  - LGAlertHUD/YJSheetView (1.1.4):
     - Masonry
     - YJExtensions
-  - LGBundle/Bundle (1.0.3):
-    - LGBundle/Manager
-  - LGBundle/Manager (1.0.3)
+  - LGBundle (1.0.5):
+    - LGBundle/BarBundle (= 1.0.5)
+    - LGBundle/Bundle (= 1.0.5)
+  - LGBundle/BarBundle (1.0.5):
+    - LGBundle/Bundle
+  - LGBundle/Bundle (1.0.5)
   - Masonry (1.1.0)
-  - MJExtension (3.2.2)
-  - MJRefresh (3.4.3)
+  - MJExtension (3.2.4)
+  - MJRefresh (3.5.0)
   - YJActivityIndicatorView (1.0.0)
-  - YJBaseModule (1.3.0):
-    - YJBaseModule/Base (= 1.3.0)
-    - YJBaseModule/Manager (= 1.3.0)
-    - YJBaseModule/MarqueeLabel (= 1.3.0)
-    - YJBaseModule/YJBHpple (= 1.3.0)
-    - YJBaseModule/YJBWebView (= 1.3.0)
-    - YJBaseModule/YJRRichTextEditor (= 1.3.0)
-  - YJBaseModule/Base (1.3.0):
+  - YJBaseModule (1.3.1):
+    - YJBaseModule/Base (= 1.3.1)
+    - YJBaseModule/Manager (= 1.3.1)
+    - YJBaseModule/MarqueeLabel (= 1.3.1)
+    - YJBaseModule/YJBHpple (= 1.3.1)
+    - YJBaseModule/YJBWebView (= 1.3.1)
+    - YJBaseModule/YJRRichTextEditor (= 1.3.1)
+  - YJBaseModule/Base (1.3.1):
     - LGAlertHUD
     - Masonry
     - MJExtension
@@ -36,38 +39,39 @@ PODS:
     - YJActivityIndicatorView
     - YJBaseModule/Manager
     - YJExtensions
-  - YJBaseModule/Manager (1.3.0):
-    - LGBundle/Bundle
+  - YJBaseModule/Manager (1.3.1):
+    - LGBundle
     - YJExtensions
-  - YJBaseModule/MarqueeLabel (1.3.0)
-  - YJBaseModule/YJBHpple (1.3.0)
-  - YJBaseModule/YJBWebView (1.3.0):
+  - YJBaseModule/MarqueeLabel (1.3.1)
+  - YJBaseModule/YJBHpple (1.3.1)
+  - YJBaseModule/YJBWebView (1.3.1):
     - Masonry
     - YJBaseModule/Manager
     - YJBaseModule/MarqueeLabel
     - YJBaseModule/YJBHpple
     - YJExtensions
-  - YJBaseModule/YJRRichTextEditor (1.3.0):
+  - YJBaseModule/YJRRichTextEditor (1.3.1):
     - YJBaseModule/Manager
-    - YJBaseModule/YJRRichTextEditor/ColorPicker (= 1.3.0)
-    - YJBaseModule/YJRRichTextEditor/TextView (= 1.3.0)
-  - YJBaseModule/YJRRichTextEditor/ColorPicker (1.3.0):
+    - YJBaseModule/YJRRichTextEditor/ColorPicker (= 1.3.1)
+    - YJBaseModule/YJRRichTextEditor/TextView (= 1.3.1)
+  - YJBaseModule/YJRRichTextEditor/ColorPicker (1.3.1):
     - YJBaseModule/Manager
-  - YJBaseModule/YJRRichTextEditor/TextView (1.3.0):
+  - YJBaseModule/YJRRichTextEditor/TextView (1.3.1):
     - YJBaseModule/Manager
-  - YJExtensions (1.2.8):
-    - YJExtensions/Foundation (= 1.2.8)
-    - YJExtensions/UIKit (= 1.2.8)
-    - YJExtensions/YJEGumbo (= 1.2.8)
-    - YJExtensions/YJEHpple (= 1.2.8)
-  - YJExtensions/Foundation (1.2.8):
+  - YJExtensions (1.3.1):
+    - YJExtensions/Foundation (= 1.3.1)
+    - YJExtensions/UIKit (= 1.3.1)
+    - YJExtensions/YJEGumbo (= 1.3.1)
+    - YJExtensions/YJEHpple (= 1.3.1)
+  - YJExtensions/Foundation (1.3.1):
+    - YJExtensions/YJEGumbo
     - YJExtensions/YJEHpple
-  - YJExtensions/UIKit (1.2.8):
+  - YJExtensions/UIKit (1.3.1):
     - YJExtensions/Foundation
-  - YJExtensions/YJEGumbo (1.2.8):
-    - YJExtensions/YJEGumbo/src (= 1.2.8)
-  - YJExtensions/YJEGumbo/src (1.2.8)
-  - YJExtensions/YJEHpple (1.2.8)
+  - YJExtensions/YJEGumbo (1.3.1):
+    - YJExtensions/YJEGumbo/src (= 1.3.1)
+  - YJExtensions/YJEGumbo/src (1.3.1)
+  - YJExtensions/YJEHpple (1.3.1)
 
 DEPENDENCIES:
   - YJBaseModule (from `../`)
@@ -87,15 +91,15 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LGAlertHUD: d14fa1d2ab68418cf8f0a1fcb1a8d9eee6a4841b
-  LGBundle: 14ca72907347cbeaa0cfa62f80f387d093e0d4ce
+  LGAlertHUD: d85ccbabb15c09cca6e96850caf30a9fdf23dc48
+  LGBundle: a757d0ea18cc850167d6b5d8c58ebd09f63891ff
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MJExtension: d9b9c74cbdeb724c1e9ecbb157b318276e62e876
-  MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
+  MJExtension: 88e0900751b6cac8de1cf724ca9838a0b28d5acb
+  MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
   YJActivityIndicatorView: f51112fa59d69762bd6147cf0da573ff2a9a0215
-  YJBaseModule: 4a05733d82d428337116c7cb3b50deb3c06c581a
-  YJExtensions: f38d0c8b05ea3cd52bde07bdd35bb913065abbc8
+  YJBaseModule: 8133f27ef30371c86bfc198181e90192c5d180da
+  YJExtensions: 64ccb4405fadc5b77b4e8dea9aad864db582073a
 
 PODFILE CHECKSUM: fbd86e2512a077e688239ad177feaef9d7bdc57f
 
-COCOAPODS: 1.9.2
+COCOAPODS: 1.11.2

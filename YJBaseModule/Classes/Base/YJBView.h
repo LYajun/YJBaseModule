@@ -30,9 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 没有数据 */
 @property (copy, nonatomic) NSString *yj_noDataTitle;
-
+@property (nonatomic,strong) UIImage *yj_noDataImage;
 /** 图片的偏移量 */
 @property (nonatomic,assign) CGFloat yj_noDataImgOffsetY;
+@property (nonatomic,assign) CGFloat yj_noDataLabOffsetY;
 @property (nonatomic,assign) CGFloat yj_noDataSearchImgOffsetY;
 
 

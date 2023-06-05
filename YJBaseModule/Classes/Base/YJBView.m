@@ -61,6 +61,10 @@
     _yj_noDataTitle = yj_noDataTitle;
     self.noDataLab.text = yj_noDataTitle;
 }
+- (void)setYj_noDataImage:(UIImage *)yj_noDataImage{
+    _yj_noDataImage = yj_noDataImage;
+    self.noDataImgView.image = yj_noDataImage;
+}
 - (void)setYj_loadErrorTitle:(NSString *)yj_loadErrorTitle{
     _yj_loadErrorTitle = yj_loadErrorTitle;
     self.loadErrorLab.text = yj_loadErrorTitle;
@@ -71,7 +75,11 @@
     if (isSearchEmpty) {
         self.noDataLab.text = [YJBManager defaultManager].searchEmptyTitle;
     }else{
-        self.noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
+        if (_yj_noDataTitle && _yj_noDataTitle.length > 0) {
+            self.noDataLab.text = _yj_noDataTitle;
+        }else{
+            self.noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
+        }
     }
 }
 #pragma mark - Loading
@@ -175,7 +183,7 @@
         [gifImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.loadingGifView);
             make.centerY.equalTo(self.loadingGifView).offset(-10);
-            make.width.mas_equalTo(140);
+            make.width.mas_equalTo([YJBManager defaultManager].loadingGifWidth);
             make.height.equalTo(gifImageView.mas_width).multipliedBy(1.01);
         }];
         
@@ -233,7 +241,7 @@
         [self.noDataLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.noDataView);
             make.left.equalTo(self.noDataView).offset(20);
-            make.centerY.equalTo(self.noDataView).offset(20);
+            make.centerY.equalTo(self.noDataView).offset(20+self.yj_noDataLabOffsetY);
         }];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(yj_loadErrorUpdate)];
         [_noDataView addGestureRecognizer:tap];
@@ -294,6 +302,7 @@
         _noDataLab.textAlignment = NSTextAlignmentCenter;
         _noDataLab.textColor = [YJBManager defaultManager].loadEmptyTitleColor;
         _noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
+        _noDataLab.numberOfLines = 0;
     }
     return _noDataLab;
 }

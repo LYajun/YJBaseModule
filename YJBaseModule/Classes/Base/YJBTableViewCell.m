@@ -28,7 +28,7 @@
     _isShowSeparator = NO;
     _separatorOffset = 0;
     _separatorWidth = 0.8;
-    _sepColor = [UIColor yj_colorWithHex:0xdcdcdc];
+    _sepColor = [UIColor yj_colorWithHex:0xe6e6e6];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     if (@available(iOS 14.0, *)) {
         [self.contentView addSubview:self.botLine];

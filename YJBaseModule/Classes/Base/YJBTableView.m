@@ -21,6 +21,9 @@
     return self;
 }
 - (void)configure{
+    if (@available(iOS 15.0, *)) {
+        self.sectionHeaderTopPadding = 0;
+    }
     self.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.backgroundColor = [UIColor whiteColor];
     self.estimatedRowHeight = 0;
@@ -33,6 +36,9 @@
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             if (weakSelf.refreshDelegate && [weakSelf.refreshDelegate respondsToSelector:@selector(tableViewHeaderDidRefresh)]) {
                 [weakSelf.refreshDelegate tableViewHeaderDidRefresh];
+            }
+            if (weakSelf.refreshDelegate && [weakSelf.refreshDelegate respondsToSelector:@selector(tableViewHeaderDidRefresh:)]) {
+                [weakSelf.refreshDelegate tableViewHeaderDidRefresh:weakSelf];
             }
         }];
         header.lastUpdatedTimeLabel.hidden = YES;
@@ -50,11 +56,14 @@
             if (weakSelf.refreshDelegate && [weakSelf.refreshDelegate respondsToSelector:@selector(tableViewFooterDidRefresh)]) {
                 [weakSelf.refreshDelegate tableViewFooterDidRefresh];
             }
+            if (weakSelf.refreshDelegate && [weakSelf.refreshDelegate respondsToSelector:@selector(tableViewFooterDidRefresh:)]) {
+                [weakSelf.refreshDelegate tableViewFooterDidRefresh:weakSelf];
+            }
         }];
         // 设置文字
-        [footer setTitle:@"上拉加载更多 ..." forState:MJRefreshStateIdle];
+        [footer setTitle:@"" forState:MJRefreshStateIdle];
         [footer setTitle:@"正在拼命加载 ..." forState:MJRefreshStateRefreshing];
-        [footer setTitle:@"已全部加载" forState:MJRefreshStateNoMoreData];
+        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
         footer.stateLabel.font = [UIFont systemFontOfSize:[YJBManager defaultManager].refreshFooterStateTitleSize];
         footer.stateLabel.textColor = [YJBManager defaultManager].refreshFooterStateTitleColor;
         self.mj_footer = footer;
@@ -92,6 +101,7 @@
 }
 - (void)endFooterRefreshing{
     if (self.mj_footer) {
+        [self.currentFooter setTitle:@"上拉加载更多 ..." forState:MJRefreshStateIdle];
         [self.mj_footer endRefreshing];
     }
 }
@@ -102,6 +112,7 @@
 }
 - (void)resetFooterNoMoreData{
     if (self.mj_footer) {
+        [self.currentFooter setTitle:@"" forState:MJRefreshStateIdle];
         [self.mj_footer resetNoMoreData];
     }
 }
@@ -112,6 +123,9 @@
         [self.mj_header beginRefreshingWithCompletionBlock:^{
             if (weakSelf.refreshDelegate && [weakSelf.refreshDelegate respondsToSelector:@selector(tableViewHeaderDidRefresh)]) {
                 [weakSelf.refreshDelegate tableViewHeaderDidRefresh];
+            }
+            if (weakSelf.refreshDelegate && [weakSelf.refreshDelegate respondsToSelector:@selector(tableViewHeaderDidRefresh:)]) {
+                [weakSelf.refreshDelegate tableViewHeaderDidRefresh:weakSelf];
             }
         }];
         

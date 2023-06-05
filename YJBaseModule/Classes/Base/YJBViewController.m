@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UILabel *loadingGifLab;
 @property (strong, nonatomic) UILabel *loadingFlowerLab;
 @property (strong, nonatomic) YJActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) UIScreenEdgePanGestureRecognizer *dismissEdgeGes;
 /** 数据为空 */
 @property (strong, nonatomic) UIView *noDataView;
 @property (strong, nonatomic) UILabel *noDataLab;
@@ -48,23 +49,30 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
-
+    [self.view addGestureRecognizer:self.dismissEdgeGes];
     _yj_noDataImgOffsetY = IsIPad ? -70 : -50;
     _yj_noDataSearchImgOffsetY = -80;
     _yj_loadErrorImgOffsetY = -15;
- 
+    _yj_noDataLabOffsetY = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotateNoti:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (![self.navigationController.view.gestureRecognizers containsObject:((YJBNavigationController *)self.navigationController).backGesture]) {
-        [self.navigationController.view addGestureRecognizer:((YJBNavigationController *)self.navigationController).backGesture];
+    if ([self.navigationController respondsToSelector:@selector(backGesture)]) {
+        if (![self.navigationController.view.gestureRecognizers containsObject:((YJBNavigationController *)self.navigationController).backGesture]) {
+            [self.navigationController.view addGestureRecognizer:((YJBNavigationController *)self.navigationController).backGesture];
+        }
     }
 
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)] && self.closeSideslip) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-        ((YJBNavigationController *)self.navigationController).backGesture.enabled = NO;
+        if ([self.navigationController respondsToSelector:@selector(backGesture)]) {
+            ((YJBNavigationController *)self.navigationController).backGesture.enabled = NO;
+        }
     }
+}
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -72,13 +80,18 @@
     
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)] && self.closeSideslip) {
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-        ((YJBNavigationController *)self.navigationController).backGesture.enabled = YES;
+        if ([self.navigationController respondsToSelector:@selector(backGesture)]) {
+            ((YJBNavigationController *)self.navigationController).backGesture.enabled = YES;
+        }
     }
 }
 - (void)didRotateNoti:(NSNotification *)noti{
     if (self.navigationController) {
         self.navigationController.navigationBar.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [self.view yj_customNavBarHeight]);
     }
+}
+- (void)dismissEdgePan:(UIScreenEdgePanGestureRecognizer *)pan{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark - UINavigationControllerDelegate
 - (void)willMoveToParentViewController:(UIViewController *)parent{
@@ -107,8 +120,9 @@
     self.navigationController.delegate = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"****** %@--dealloc *******", NSStringFromClass([self class]));
+    [self yj_dealloc];
 }
-
+- (void)yj_dealloc{}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     NSLog(@"%@ didReceiveMemoryWarning", NSStringFromClass([self class]));
@@ -117,18 +131,20 @@
 #pragma mark - LoadData
 - (void)yj_loadData{
     self.isLoadingGif = NO;
+    [self yj_setLoadingViewShow:YES];
+    [self loadDataWithCompletion:nil];
+}
+- (void)yj_loadDataWithBackgroundColor:(UIColor *)backgroundColor tintColor:(UIColor *)tintColor{
+    self.isLoadingGif = NO;
+    [self yj_setLoadingViewShow:YES backgroundColor:backgroundColor tintColor:tintColor];
     [self loadDataWithCompletion:nil];
 }
 - (void)yj_loadGifData{
     self.isLoadingGif = YES;
+    [self yj_setLoadingGifViewShow:YES];
     [self loadDataWithCompletion:nil];
 }
 - (void)loadDataWithCompletion:(void (^)(BOOL))completion{
-    if (self.isLoadingGif) {
-        [self yj_setLoadingGifViewShow:YES];
-    }else{
-        [self yj_setLoadingViewShow:YES];
-    }
     __weak typeof(self) weakSelf = self;
     [self.dataModel yj_loadDataWithSuccess:^(BOOL noData) {
         if (noData) {
@@ -137,6 +153,7 @@
             }else{
                 [weakSelf yj_setNoDataViewShow:YES];
             }
+            [weakSelf yj_loadError];
         }else{
             if (weakSelf.isLoadingGif) {
                 [weakSelf yj_setLoadingGifViewShow:NO];
@@ -149,6 +166,7 @@
             [weakSelf yj_updateData];
         }
     } failed:^(NSError *error) {
+        [weakSelf yj_loadError];
         [weakSelf yj_setLoadErrorViewShow:YES];
         weakSelf.yj_loadErrorTitle = error.localizedDescription;
         if (completion) {
@@ -156,6 +174,7 @@
         }
     }];
 }
+- (void)yj_loadError{}
 - (void)yj_updateData{
     
 }
@@ -168,6 +187,20 @@
 }
 - (void)yj_loadTableData{};
 #pragma mark - Setter
+- (void)setOpenDismissEdgeGesEnable:(BOOL)openDismissEdgeGesEnable{
+    _openDismissEdgeGesEnable = openDismissEdgeGesEnable;
+    self.dismissEdgeGes.enabled = openDismissEdgeGesEnable;
+}
+- (void)setHideLoadingView:(BOOL)hideLoadingView{
+    _hideLoadingView = hideLoadingView;
+    self.loadingView.hidden = hideLoadingView;
+    self.loadingGifView.hidden = hideLoadingView;
+}
+- (void)setHideEmptyView:(BOOL)hideEmptyView{
+    _hideEmptyView = hideEmptyView;
+    self.noDataView.hidden = hideEmptyView;
+    self.loadErrorView.hidden = hideEmptyView;
+}
 - (void)setYj_loadingGifTitle:(NSString *)yj_loadingGifTitle{
     _yj_loadingGifTitle = yj_loadingGifTitle;
     self.loadingGifLab.text = yj_loadingGifTitle;
@@ -186,6 +219,16 @@
     _yj_noDataTitle = yj_noDataTitle;
     self.noDataLab.text = yj_noDataTitle;
 }
+- (void)setYj_noDataImage:(UIImage *)yj_noDataImage{
+    _yj_noDataImage = yj_noDataImage;
+    self.noDataImgView.image = yj_noDataImage;
+}
+- (void)setYj_noDataTitleColor:(UIColor *)yj_noDataTitleColor{
+    _yj_noDataTitleColor = yj_noDataTitleColor;
+    self.noDataLab.textColor = yj_noDataTitleColor;
+    self.loadingGifLab.textColor = yj_noDataTitleColor;
+    self.loadErrorLab.textColor = yj_noDataTitleColor;
+}
 - (void)setYj_loadErrorTitle:(NSString *)yj_loadErrorTitle{
     _yj_loadErrorTitle = yj_loadErrorTitle;
     self.loadErrorLab.text = yj_loadErrorTitle;
@@ -202,7 +245,11 @@
             self.noDataLab.text = [YJBManager defaultManager].loadEmptyTitle;
         }
     }
+    if (!self.noDataImgView.hidden && self.hideEmptyImg) {
+        self.noDataImgView.hidden = YES;
+    }
 }
+
 #pragma mark - Loading
 - (void)yj_setLoadingViewShow:(BOOL)show{
     [self yj_setLoadingViewShow:show backgroundColor:self.view.backgroundColor tintColor:[YJBManager defaultManager].loadingColor];
@@ -292,7 +339,7 @@
 - (UIView *)loadingGifView{
     if (!_loadingGifView) {
         _loadingGifView = [[UIView alloc]init];
-        _loadingGifView.backgroundColor = self.view.backgroundColor;
+        _loadingGifView.backgroundColor = UIColor.whiteColor;
         
         UIImageView *gifImageView = [[UIImageView alloc]  initWithFrame:CGRectZero];
         gifImageView.animationImages = [YJBManager defaultManager].loadingImgs;
@@ -304,7 +351,7 @@
         [gifImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.loadingGifView);
             make.centerY.equalTo(self.loadingGifView).offset(-10);
-            make.width.mas_equalTo(140);
+            make.width.mas_equalTo([YJBManager defaultManager].loadingGifWidth);
             make.height.equalTo(gifImageView.mas_width).multipliedBy(1.01);
         }];
         
@@ -361,7 +408,7 @@
         [self.noDataLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.noDataView);
             make.left.equalTo(self.noDataView).offset(20);
-            make.centerY.equalTo(self.noDataView).offset(20);
+            make.centerY.equalTo(self.noDataView).offset(20 + self.yj_noDataLabOffsetY);
         }];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(yj_loadErrorUpdate)];
         [_noDataView addGestureRecognizer:tap];
@@ -455,5 +502,12 @@
     }
     return _loadErrorLab;
 }
-
+- (UIScreenEdgePanGestureRecognizer *)dismissEdgeGes{
+    if (!_dismissEdgeGes) {
+        _dismissEdgeGes = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget: self action:@selector(dismissEdgePan:)];
+        _dismissEdgeGes.edges = UIRectEdgeLeft;
+        _dismissEdgeGes.enabled = NO;
+    }
+    return _dismissEdgeGes;
+}
 @end

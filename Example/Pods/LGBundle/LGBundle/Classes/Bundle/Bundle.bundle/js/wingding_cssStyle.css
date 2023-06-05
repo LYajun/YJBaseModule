@@ -1,0 +1,20 @@
+<style>
+
+         @font-face {
+                    font-family: 'Arial';
+                    src: url(Arial.ttf);
+                }
+                @font-face {
+                    font-family: 'Cambria';
+                    src: url(Cambria.ttf);
+                }
+                @font-face {
+                    font-family: 'Symbol';
+                    src: url(symbol.ttf);
+                }
+                @font-face {
+                    font-family: 'Wingdings';
+                    src: url(wingding.ttf);
+                }
+
+</style>

@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YJBManager : NSObject
 
+@property (nonatomic,assign) CGFloat loadingGifWidth;
+
 /** 加载视图颜色 */
 @property (nonatomic,strong) UIColor *loadingColor;
 
@@ -64,6 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSBundle *)lgBundle;
 - (NSBundle *)currentBundle;
 - (NSArray *)loadingImgs;
+- (NSTimeInterval)loadingDration;
 @end
 
 NS_ASSUME_NONNULL_END

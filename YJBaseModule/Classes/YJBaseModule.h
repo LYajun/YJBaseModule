@@ -18,6 +18,6 @@
 #import "YJBTableView.h"
 #import "YJBView.h"
 #import "YJBTableViewCell.h"
-
+#import "YJBModel.h"
 
 #endif /* YJBaseModule_h */

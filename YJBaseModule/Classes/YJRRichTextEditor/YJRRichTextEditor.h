@@ -59,7 +59,7 @@ static NSString * const YJREditorContent = @"document.activeElement.id=='zss_edi
 /**
  *  The viewController used with YJRRichTextEditor
  */
-@interface YJRRichTextEditor : UIViewController <WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, YJRColorPickerViewControllerDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,YJRFontsViewControllerDelegate>
+@interface YJRRichTextEditor : UIViewController <WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, YJRColorPickerViewControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,YJRFontsViewControllerDelegate>
 
 
 /**

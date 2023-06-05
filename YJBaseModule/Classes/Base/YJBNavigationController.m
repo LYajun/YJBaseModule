@@ -59,7 +59,7 @@
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return UIStatusBarStyleLightContent;
+    return self.visibleViewController.preferredStatusBarStyle;
 }
 
 - (void)pushViewControllerWithClass:(Class)controllerClass {

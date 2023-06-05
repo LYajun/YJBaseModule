@@ -118,7 +118,7 @@ zss_editor.setPlaceholder = function(placeholder) {
     //set focus			 
 	editor.focusout(function(){
         var element = $(this);        
-        if (!element.text().trim().length) {
+        if (!element.html().trim().length) {
             element.empty();
         }
     });

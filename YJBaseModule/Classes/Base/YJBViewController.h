@@ -21,17 +21,22 @@ NS_ASSUME_NONNULL_BEGIN
 /** 是否关闭侧滑iOS默认手势，默认不关闭 */
 @property (nonatomic, assign) BOOL closeSideslip;
 
-
-
+/** 隐藏空页面图片 */
+@property (nonatomic, assign) BOOL hideEmptyImg;
+@property (nonatomic, assign) BOOL openDismissEdgeGesEnable;
 - (void)yj_interactivePopGestureAction;
 - (void)yj_setNavigationDelegate;
 
+- (void)yj_dealloc;
 
 - (void)yj_loadData;
+- (void)yj_loadDataWithBackgroundColor:(UIColor *)backgroundColor tintColor:(UIColor *)tintColor;
 - (void)yj_loadGifData;
+
+
 - (void)yj_updateData;
 - (void)yj_loadErrorUpdate;
-
+- (void)yj_loadError;
 - (void)yj_loadTableData;
 
 /** 加载视图与顶部的间距 */
@@ -47,12 +52,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic) NSString *yj_loadingGifTitle;
 @property (copy, nonatomic) NSString *yj_loadingFlowerTitle;
 
-
+@property (nonatomic,assign) BOOL hideLoadingView;
+@property (nonatomic,assign) BOOL hideEmptyView;
 /** 没有数据 */
 @property (copy, nonatomic) NSString *yj_noDataTitle;
-
+@property (strong, nonatomic) UIColor *yj_noDataTitleColor;
+@property (nonatomic,strong) UIImage *yj_noDataImage;
 /** 图片的偏移量 */
 @property (nonatomic,assign) CGFloat yj_noDataImgOffsetY;
+@property (nonatomic,assign) CGFloat yj_noDataLabOffsetY;
 @property (nonatomic,assign) CGFloat yj_noDataSearchImgOffsetY;
 
 /** 是否搜索 */

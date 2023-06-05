@@ -45,9 +45,9 @@
                 [weakSelf.refreshDelegate collectionViewFooterDidRefresh];
             }
         }];
-        [footer setTitle:@"上拉加载更多 ..." forState:MJRefreshStateIdle];
+        [footer setTitle:@"" forState:MJRefreshStateIdle];
         [footer setTitle:@"正在拼命加载 ..." forState:MJRefreshStateRefreshing];
-        [footer setTitle:@"已全部加载" forState:MJRefreshStateNoMoreData];
+        [footer setTitle:@"" forState:MJRefreshStateNoMoreData];
         footer.stateLabel.font = [UIFont systemFontOfSize:[YJBManager defaultManager].refreshFooterStateTitleSize];
         footer.stateLabel.textColor = [YJBManager defaultManager].refreshFooterStateTitleColor;
         self.mj_footer = footer;
@@ -67,6 +67,7 @@
 }
 - (void)endFooterRefreshing{
      if (self.mj_footer) {
+         [self.currentFooter setTitle:@"上拉加载更多 ..." forState:MJRefreshStateIdle];
          [self.mj_footer endRefreshing];
      }
 }
@@ -77,6 +78,7 @@
 }
 - (void)resetFooterNoMoreData{
     if (self.mj_footer) {
+        [self.currentFooter setTitle:@"" forState:MJRefreshStateIdle];
         [self.mj_footer resetNoMoreData];
     }
 }

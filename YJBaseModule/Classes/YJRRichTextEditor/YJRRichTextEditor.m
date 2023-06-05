@@ -114,11 +114,6 @@ static Class hackishFixClass = Nil;
 @property (nonatomic, strong) WKWebView *editorView;
 
 /*
- *  YJRRichTextView for displaying the source code for what is displayed in the editor view
- */
-@property (nonatomic, strong) YJRRichTextView *sourceView;
-
-/*
  *  CGRect for holding the frame for the editor view
  */
 @property (nonatomic) CGRect editorViewFrame;
@@ -262,9 +257,6 @@ static CGFloat kDefaultScale = 0.5;
     //Frame for the source view and editor view
     CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     
-    //Source View
-    [self createSourceViewWithFrame:frame];
-    
     //Editor View
     [self createEditorViewWithFrame:frame];
     
@@ -339,20 +331,6 @@ static CGFloat kDefaultScale = 0.5;
 }
 
 #pragma mark - Set Up View Section
-
-- (void)createSourceViewWithFrame:(CGRect)frame {
-    
-    self.sourceView = [[YJRRichTextView alloc] initWithFrame:frame];
-    self.sourceView.hidden = YES;
-    self.sourceView.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    self.sourceView.autocorrectionType = UITextAutocorrectionTypeNo;
-    self.sourceView.font = [UIFont fontWithName:@"Courier" size:13.0];
-    self.sourceView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.sourceView.autoresizesSubviews = YES;
-    self.sourceView.delegate = self;
-    [self.view addSubview:self.sourceView];
-    
-}
 
 - (void)createEditorViewWithFrame:(CGRect)frame {
     
@@ -1084,8 +1062,7 @@ static CGFloat kDefaultScale = 0.5;
 - (void)updateHTML {
     
     NSString *html = self.internalHTML;
-    self.sourceView.text = html;
-    NSString *cleanedHTML = [self removeQuotesFromHTML:self.sourceView.text];
+    NSString *cleanedHTML = [self removeQuotesFromHTML:html];
     NSString *trigger = [NSString stringWithFormat:@"zss_editor.setHTML(\"%@\");", cleanedHTML];
     [self.editorView evaluateJavaScript:trigger completionHandler:^(NSString *result, NSError *error) {
 
@@ -1168,26 +1145,6 @@ static CGFloat kDefaultScale = 0.5;
     //this state is old and will quickly be updated after the callback above completes
     //TODO: refactor to find a more elegant approach
     return self.isFirstResponderUpdated;
-}
-
-- (void)showHTMLSource:(YJRBarButtonItem *)barButtonItem {
-    if (self.sourceView.hidden) {
-        
-        [self getHTML:^(NSString *result, NSError * _Nullable error) {
-            self.sourceView.text = result;
-        }];
-        
-        self.sourceView.hidden = NO;
-        barButtonItem.tintColor = [UIColor blackColor];
-        self.editorView.hidden = YES;
-        [self enableToolbarItems:NO];
-    } else {
-        [self setHTML:self.sourceView.text];
-        barButtonItem.tintColor = [self barButtonItemDefaultColor];
-        self.sourceView.hidden = YES;
-        self.editorView.hidden = NO;
-        [self enableToolbarItems:YES];
-    }
 }
 
 - (void)removeFormat {
@@ -1354,9 +1311,7 @@ static CGFloat kDefaultScale = 0.5;
 - (void)showFontsPicker {
     
     // Save the selection location
-    [self.editorView evaluateJavaScript:@"zss_editor.prepareInsert();" completionHandler:^(NSString *result, NSError *error) {
-     
-    }];
+    [self prepareInsertImage];
     
     //Call picker
     YJRFontsViewController *fontPicker = [YJRFontsViewController cancelableFontPickerViewControllerWithFontFamily:YJRFontFamilyDefault];
@@ -1413,9 +1368,7 @@ static CGFloat kDefaultScale = 0.5;
 - (void)textColor {
     
     // Save the selection location
-    [self.editorView evaluateJavaScript:@"zss_editor.prepareInsert();" completionHandler:^(NSString *result, NSError *error) {
-     
-    }];
+    [self prepareInsertImage];
     
     // Call the picker
     YJRColorPickerViewController *colorPicker = [YJRColorPickerViewController cancelableFullColorPickerViewControllerWithColor:[UIColor whiteColor]];
@@ -1429,9 +1382,7 @@ static CGFloat kDefaultScale = 0.5;
 - (void)bgColor {
     
     // Save the selection location
-    [self.editorView evaluateJavaScript:@"zss_editor.prepareInsert();" completionHandler:^(NSString *result, NSError *error) {
-     
-    }];
+    [self prepareInsertImage];
     
     // Call the picker
     YJRColorPickerViewController *colorPicker = [YJRColorPickerViewController cancelableFullColorPickerViewControllerWithColor:[UIColor whiteColor]];
@@ -1471,9 +1422,7 @@ static CGFloat kDefaultScale = 0.5;
 - (void)insertLink {
     
     // Save the selection location
-    [self.editorView evaluateJavaScript:@"zss_editor.prepareInsert();" completionHandler:^(NSString *result, NSError *error) {
-     
-    }];
+    [self prepareInsertImage];
 
     // Show the dialog for inserting or editing a link
     [self showInsertLinkDialogWithLink:self.selectedLinkURL title:self.selectedLinkTitle];
@@ -1596,7 +1545,6 @@ static CGFloat kDefaultScale = 0.5;
     [button setTitleColor:[self barButtonItemSelectedDefaultColor] forState:UIControlStateHighlighted];
     
     YJRBarButtonItem *barButtonItem = [[YJRBarButtonItem alloc] initWithCustomView:button];
-    
     [self.customBarButtonItems addObject:barButtonItem];
     
     [self buildToolbar];
@@ -1633,13 +1581,15 @@ static CGFloat kDefaultScale = 0.5;
         [self updateEditor];
     }
 }
-
+-(void)prepareInsertImage{
+    [self.editorView evaluateJavaScript:@"zss_editor.prepareInsert();" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+        
+    }];
+}
 - (void)insertImage {
     
     // Save the selection location
-    [self.editorView evaluateJavaScript:@"zss_editor.prepareInsert();" completionHandler:^(NSString *result, NSError *error) {
-     
-    }];
+    [self prepareInsertImage];
 
     [self showInsertImageDialogWithLink:self.selectedImageURL alt:self.selectedImageAlt];
     
@@ -1648,9 +1598,7 @@ static CGFloat kDefaultScale = 0.5;
 - (void)insertImageFromDevice {
     
     // Save the selection location
-    [self.editorView evaluateJavaScript:@"zss_editor.prepareInsert();" completionHandler:^(NSString *result, NSError *error) {
-     
-    }];
+    [self prepareInsertImage];
 
     [self showInsertImageDialogFromDeviceWithScale:self.selectedImageScale alt:self.selectedImageAlt];
     
@@ -1802,9 +1750,11 @@ static CGFloat kDefaultScale = 0.5;
 }
 
 - (void)insertImage:(NSString *)url alt:(NSString *)alt {
+    [self prepareInsertImage];
+  
     NSString *trigger = [NSString stringWithFormat:@"zss_editor.insertImage(\"%@\", \"%@\");", url, alt];
     [self.editorView evaluateJavaScript:trigger completionHandler:^(NSString *result, NSError *error) {
-     
+        
     }];
 }
 
@@ -1873,26 +1823,6 @@ static CGFloat kDefaultScale = 0.5;
     }
     
 }
-
-
-#pragma mark - UITextView Delegate
-
-- (void)textViewDidChange:(UITextView *)textView {
-    CGRect line = [textView caretRectForPosition:textView.selectedTextRange.start];
-    CGFloat overflow = line.origin.y + line.size.height - ( textView.contentOffset.y + textView.bounds.size.height - textView.contentInset.bottom - textView.contentInset.top );
-    if ( overflow > 0 ) {
-        // We are at the bottom of the visible text and introduced a line feed, scroll down (iOS 7 does not do it)
-        // Scroll caret to visible area
-        CGPoint offset = textView.contentOffset;
-        offset.y += overflow + 7; // leave 7 pixels margin
-        // Cannot animate with setContentOffset:animated: or caret will not appear
-        [UIView animateWithDuration:.2 animations:^{
-            [textView setContentOffset:offset];
-        }];
-    }
-    
-}
-
 
 #pragma mark - WKScriptMessageHandler Delegate
 
@@ -2204,6 +2134,11 @@ static CGFloat kDefaultScale = 0.5;
 #pragma mark - Keyboard status
 
 - (void)keyboardWillShowOrHide:(NSNotification *)notification {
+    UIWindow *keywindow = [[UIApplication sharedApplication] keyWindow];
+    id firstResponder = [keywindow performSelector:@selector(firstResponder)];
+    if (!firstResponder || ![firstResponder isKindOfClass:NSClassFromString(@"WKWebBrowserViewMinusAccessoryView")]) {
+        return;
+    }
     // User Info
     NSDictionary *info = notification.userInfo;
     CGFloat duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
@@ -2219,7 +2154,7 @@ static CGFloat kDefaultScale = 0.5;
     // Correct Curve
     UIViewAnimationOptions animationOptions = curve << 16;
     
-    const int extraHeight = 10;
+    const int extraHeight = 0;
     
     if (keyboardEnd.origin.y < [[UIScreen mainScreen] bounds].size.height) {
         
@@ -2238,12 +2173,9 @@ static CGFloat kDefaultScale = 0.5;
             self.editorViewFrame = self.editorView.frame;
             self.editorView.scrollView.contentInset = UIEdgeInsetsZero;
             self.editorView.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
-            
-            // Source View
-            CGRect sourceFrame = self.sourceView.frame;
-            sourceFrame.size.height = (self.view.frame.size.height - keyboardHeight) - sizeOfToolbar - extraHeight;
-            self.sourceView.frame = sourceFrame;
-            
+            NSLog(@"kbRect:%@",NSStringFromCGRect(kbRect));
+            NSLog(@"toolbarFrame:%@",NSStringFromCGRect(toolbarFrame));
+            NSLog(@"editorFrame:%@",NSStringFromCGRect(editorFrame));
             // Provide editor with keyboard height and editor view height
             [self setFooterHeight:(keyboardHeight - 8)];
             [self setContentHeight: self.editorViewFrame.size.height];
@@ -2281,17 +2213,6 @@ static CGFloat kDefaultScale = 0.5;
             self.editorViewFrame = self.editorView.frame;
             self.editorView.scrollView.contentInset = UIEdgeInsetsZero;
             self.editorView.scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
-            
-            // Source View
-            CGRect sourceFrame = self.sourceView.frame;
-            
-            if (self->_alwaysShowToolbar) {
-                sourceFrame.size.height = ((self.view.frame.size.height - sizeOfToolbar) - extraHeight);
-            } else {
-                sourceFrame.size.height = self.view.frame.size.height;
-            }
-            
-            self.sourceView.frame = sourceFrame;
             
             [self setFooterHeight:0];
             [self setContentHeight:self.editorViewFrame.size.height];

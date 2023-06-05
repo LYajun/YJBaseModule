@@ -40,6 +40,12 @@
         self.totalCountUpdateBlock(totalCount);
     }
 }
+- (void)setCurrentPage:(NSInteger)currentPage{
+    _currentPage = currentPage;
+    if (self. yj_isRemoveAll) {
+        [self yj_removeAllData];
+    }
+}
 - (void)yj_removeAllData{
     [self.models removeAllObjects];
 }
@@ -119,7 +125,6 @@
             [LGAlert showErrorWithStatus:@"更新失败"];
         }else{
             [weakSelf.ownTableView reloadData];
-            [weakSelf.ownTableView scrollToRowAtIndexPath:weakSelf.updateIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
         }
     } failed:^(NSError * _Nonnull error) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
@@ -178,7 +183,6 @@
             [LGAlert showErrorWithStatus:@"更新失败"];
         }else{
             [weakSelf.ownCollectionView yj_reloadData];
-            [weakSelf.ownCollectionView scrollToItemAtIndexPath:weakSelf.updateIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
         }
     } failed:^(NSError * _Nonnull error) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];

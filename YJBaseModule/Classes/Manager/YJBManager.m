@@ -14,6 +14,7 @@
 @property (nonatomic,strong) NSArray *loadingImgs;
 @property (nonatomic,strong) NSBundle *currentBundle;
 @property (nonatomic,strong) NSBundle *lgBundle;
+@property (nonatomic,assign) NSTimeInterval loadingDration;
 @end
 @implementation YJBManager
 + (YJBManager *)defaultManager{
@@ -27,11 +28,12 @@
 }
 
 - (void)configure{
+    _loadingGifWidth = [LGBundleManager defaultManager].loadingGifWidth;
     _currentBundle = [NSBundle yj_bundleWithCustomClass:YJBManager.class bundleName:@"YJBaseModule"];
     _lgBundle = [LGBundleManager defaultManager].bundle;
     
     _loadingImgs = [LGBundleManager defaultManager].loadingImgs;
-    
+    _loadingDration = _loadingImgs.count * 0.05;
     
     _loadingColor = [UIColor yj_colorWithHex:0x989898];
     _loadingGifTitle = @"努力加载中...";

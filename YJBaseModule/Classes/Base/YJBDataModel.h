@@ -43,21 +43,26 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *answerID;
 /** 资料ID */
 @property (nonatomic,copy) NSString *resID;
+@property (nonatomic,copy) NSString *sysID;
 /** 资料名 */
 @property (nonatomic,copy) NSString *resName;
 /** 班级ID */
 @property (nonatomic,copy) NSString *classID;
+@property (nonatomic,copy) NSString *className;
 /** 大题ID */
 @property (nonatomic,copy) NSString *topicID;
 /** 是否标准资料 */
 @property (nonatomic,assign) BOOL isStandard;
 /** 资料类型 */
 @property (nonatomic,assign) NSInteger resOriginTypeID;
+/** 状态 */
+@property (nonatomic,assign) NSInteger state;
 /** 课件类型ID */
 @property (nonatomic,copy) NSString *resOriTypeID;
 /** 其他参数 */
 @property (nonatomic,strong) NSDictionary *otherParameters;
-
+/** 是否加载中 */
+@property (nonatomic,assign) BOOL isLoading;
 
 /** 表格 当前页码 */
 @property (nonatomic,assign) NSInteger currentPage;

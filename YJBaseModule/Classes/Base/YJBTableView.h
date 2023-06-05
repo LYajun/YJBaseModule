@@ -8,10 +8,13 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@class YJBTableView;
 @protocol YJBTableViewRefreshDelegate <NSObject>
 @optional
 - (void)tableViewHeaderDidRefresh;
 - (void)tableViewFooterDidRefresh;
+- (void)tableViewHeaderDidRefresh:(YJBTableView *)tableView;
+- (void)tableViewFooterDidRefresh:(YJBTableView *)tableView;
 @end
 @interface YJBTableView : UITableView
 @property (nonatomic,assign) BOOL hideFooterStateLab;

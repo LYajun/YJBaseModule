@@ -269,7 +269,7 @@ NSString *const YJWebViewDictionaryNotifiaction = @"YJWebViewDictionaryNotifiact
 }
 + (NSString *)yj_autoFitImgSizeJSString{
 //    return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.width > maxwidth){img.style.width = '90%';img.style.height = 'auto';}}";
-    return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.width > maxwidth){img.style.width = '90%';img.style.height = 'auto';} if(img.style){img.style.display = 'inline-block';img.style.overflow = 'hidden';if (img.width > maxwidth*0.6){img.style.marginBottom = '10px';}}}";
+    return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.width == 0){img.style.maxWidth='95%';img.style.width = 'auto';img.style.height = 'auto';} if(img.width > maxwidth){img.style.width = '95%';img.style.height = 'auto';} if(img.style){img.style.display = 'inline-block';img.style.overflow = 'hidden';if (img.width > maxwidth*0.6){img.style.marginBottom = '10px';}}}";
 }
 
 + (NSString *)yj_autoFitTableSizeJSString{
